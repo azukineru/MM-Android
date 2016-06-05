@@ -30,9 +30,6 @@ public class MainMenu extends AbstractScreen{
 	private Stage stage = new Stage();
 	private Skin skin = new Skin();
 	private Texture titleImage;
-	private Texture bgImage;
-	private Sprite sprite;
-	private Camera camera;
 	private BitmapFont fontMenu;
 	
 	public MainMenu(){

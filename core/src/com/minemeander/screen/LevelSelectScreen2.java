@@ -35,7 +35,7 @@ public class LevelSelectScreen2 extends AbstractScreen {
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));		
-		skin.add("default", Art.bitmapFont);
+		skin.add("default", Art.menuFont);
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);		

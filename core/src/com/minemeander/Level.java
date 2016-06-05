@@ -3,7 +3,6 @@ package com.minemeander;
 import static com.minemeander.Constant.BACKGROUND_LAYERS;
 import static com.minemeander.Constant.METERS_PER_TILE;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,10 +24,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.minemeander.ai.PathingTool;
 import com.minemeander.engine.tiles.MMLevelLayout;
 import com.minemeander.objects.GameObjectData;
-import com.minemeander.objects.Jack;
 import com.minemeander.objects.LevelObjectManager;
 import com.minemeander.objects.CollisionCategory;
 import com.minemeander.procedural.ProceduralLevelGenerator;
+import com.minemeander.screen.CompletionScreen;
 import com.minemeander.screen.GameOverScreen;
 import com.minemeander.screen.LevelScreen;
 
@@ -278,13 +277,16 @@ public class Level {
 	}
 
 	public void onCompletion() {
+
 		int nextWorld = worldId+1;
-		if(nextWorld != 11){
-			screen.transitionTo(new LevelScreen(worldId+1));
+		if(nextWorld != 16){
+			//screen.transitionTo(new LevelScreen(worldId+1));
+			screen.transitionTo(new CompletionScreen(worldId));
 		}
 		else{
 			screen.transitionTo(new GameOverScreen());
 		}
+
 	}
 
 	public float getPlatformDamping() {

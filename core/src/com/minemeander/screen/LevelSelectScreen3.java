@@ -34,7 +34,7 @@ public class LevelSelectScreen3 extends AbstractScreen{
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));		
-		skin.add("default", Art.bitmapFont);
+		skin.add("default", Art.menuFont);
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);		
@@ -43,7 +43,7 @@ public class LevelSelectScreen3 extends AbstractScreen{
 		skin.add("default", textButtonStyle);
 		Table table = new Table();
 		table.padTop(100);
-		table.padLeft(-200);
+		//table.padLeft(-500);
 		table.setFillParent(true);
 		stage.addActor(table);
 	
