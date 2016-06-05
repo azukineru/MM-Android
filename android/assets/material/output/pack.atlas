@@ -1,0 +1,104 @@
+
+pack.png
+size: 512,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Climb
+  rotate: false
+  xy: 2, 20
+  size: 55, 32
+  orig: 55, 32
+  offset: 0, 0
+  index: -1
+crystal-qubodup-ccby3-16-blue
+  rotate: false
+  xy: 132, 104
+  size: 128, 16
+  orig: 128, 16
+  offset: 0, 0
+  index: -1
+crystal-qubodup-ccby3-32-blue
+  rotate: false
+  xy: 2, 156
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1
+eskimo_climb
+  rotate: false
+  xy: 390, 156
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+eskimo_walk
+  rotate: false
+  xy: 2, 122
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+flower-idle
+  rotate: false
+  xy: 260, 156
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 2, 88
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+menubox
+  rotate: false
+  xy: 2, 190
+  size: 480, 64
+  orig: 480, 64
+  offset: 0, 0
+  index: -1
+spider0
+  rotate: false
+  xy: 2, 2
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+spider1
+  rotate: false
+  xy: 132, 86
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 132, 122
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+web
+  rotate: false
+  xy: 59, 20
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+zombie_climb
+  rotate: false
+  xy: 262, 122
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+zombie_walk
+  rotate: false
+  xy: 2, 54
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
