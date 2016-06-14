@@ -2,6 +2,7 @@ package com.minemeander;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,6 +20,13 @@ public class Art {
     public static Sound coinSound;
     public static Sound hurtSound;
     public static Sound jumpSound;
+    public static Sound buttonSound;
+    //public static Sound startSound;
+
+    public static Music menuMusic;
+    public static Music playMusic;
+    public static Music winMusic;
+    public static Music loseMusic;
 
     // Jack
     public static Animation walkingRightAnimation;
@@ -101,9 +109,15 @@ public class Art {
         bigBlueJewelAnimation = new Animation(0.1f, bigBlueJewelTextures);
 
         coinSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/coin2.wav", FileType.Internal));
-        hurtSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/hurt.wav", FileType.Internal));
+        hurtSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/skill_hit.mp3", FileType.Internal));
         jumpSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/jump.wav", FileType.Internal));
-        startSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/start.mp3", FileType.Internal));
+        startSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/Accept.mp3", FileType.Internal));
+        buttonSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/powerup.wav", FileType.Internal));
+
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("material/output/sound/bgm_menu.mp3"));
+        playMusic = Gdx.audio.newMusic(Gdx.files.internal("material/output/sound/Pixel_adv.mp3"));
+        winMusic = Gdx.audio.newMusic(Gdx.files.internal("material/output/sound/victory.wav"));
+        loseMusic = Gdx.audio.newMusic(Gdx.files.internal("material/output/sound/game_over.wav"));
     }
 
     private static void loadZombie(TextureAtlas atlas) {

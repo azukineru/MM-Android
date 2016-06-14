@@ -54,6 +54,8 @@ public class LevelSelectScreen3 extends AbstractScreen{
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 11;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -63,6 +65,8 @@ public class LevelSelectScreen3 extends AbstractScreen{
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 12;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -72,6 +76,8 @@ public class LevelSelectScreen3 extends AbstractScreen{
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 13;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -81,6 +87,8 @@ public class LevelSelectScreen3 extends AbstractScreen{
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 14;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -90,6 +98,8 @@ public class LevelSelectScreen3 extends AbstractScreen{
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 15;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -98,6 +108,7 @@ public class LevelSelectScreen3 extends AbstractScreen{
 		button6.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
+				Art.buttonSound.play();
 				LevelSelectScreen3.this.transitionTo(new LevelSelectScreen2());
 			}
 		});
@@ -138,6 +149,7 @@ public class LevelSelectScreen3 extends AbstractScreen{
 		button10.addListener(new ChangeListener() {
 			@Override
 			public void changed (ChangeEvent event, Actor actor) {
+				Art.buttonSound.play();
 				LevelSelectScreen3.this.transitionTo(new MainMenu());
 			}
 		});

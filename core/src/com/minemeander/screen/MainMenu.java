@@ -35,6 +35,8 @@ public class MainMenu extends AbstractScreen{
 	public MainMenu(){
 		fontMenu  = Art.menuFont;
 		//fontMenu.getData().setScale(1f);
+		Art.menuMusic.setLooping(true);
+		Art.menuMusic.play();
 
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		skin.add("white", new Texture(pixmap));
@@ -68,6 +70,8 @@ public class MainMenu extends AbstractScreen{
 		button.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
+				Art.buttonSound.play();
+				Art.menuMusic.pause();
 				MainMenu.this.transitionTo(new LevelSelectScreen());
 			}
 		});
@@ -83,6 +87,7 @@ public class MainMenu extends AbstractScreen{
 		button2.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
+				Art.buttonSound.play();
 				MainMenu.this.transitionTo(new HelpScreen());
 			}
 		});
@@ -98,6 +103,7 @@ public class MainMenu extends AbstractScreen{
 		button3.addListener(new ChangeListener() {			
 			@Override
 			public void changed (ChangeEvent event, Actor actor) {
+				Art.buttonSound.play();
 				MainMenu.this.transitionTo(new CreditsScreen());
 			}
 		});
@@ -113,6 +119,7 @@ public class MainMenu extends AbstractScreen{
 		button4.addListener(new ChangeListener() {
 			@Override
 			public void changed (ChangeEvent event, Actor actor) {
+				//Art.buttonSound.play();
 				Gdx.app.exit();
 			}
 		});

@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.minemeander.engine.tiles.CommonTile;
+import com.minemeander.screen.FinalLevelScreen;
 import com.minemeander.screen.GameOverScreen;
 import com.minemeander.screen.LevelScreen;
 import com.minemeander.screen.LevelSelectScreen;
@@ -25,7 +26,7 @@ import com.minemeander.Level;
 public class Jack extends GameObject implements Climber, InputProcessor{
 	public static float WALK_POWER = 3;
 	public static float JUMP_POWER = 700;
-	public static float CLIMB_POWER = 60;
+	public static float CLIMB_POWER = 20;
 
 	public JackStateEnum state = JackStateEnum.IDLE;
 	public JackStateEnum lastState = null;
@@ -33,7 +34,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 	
 	public static int life = 3;
 	public static int score = 0;
-	public int mojo = 5;
+	public int heart = 5;
 	public boolean dead = false;
 	
 	// invicibility management
@@ -52,11 +53,9 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		super(id, level, x, y, CollisionCategory.JACK, false);
 		body.setBullet(true);			
 		antiGravityVector = level.gravityVector.cpy().scl(-body.getMass()).scl(0.9f);
-
-		Gdx.input.setInputProcessor(this);		
+		Gdx.input.setInputProcessor(this);
 	}
 
-	
 	protected void createFixtures(Level level, Body body, float widthRatio, float heightRatio) {
 		PolygonShape polyShape = new PolygonShape();
 		polyShape.setAsBox(width*0.2f, height*0.4f);
@@ -68,9 +67,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		circle.setRadius(0.40f);
 		circle.setPosition(new Vector2(0f, -0.5f));
 		fixture = body.createFixture(circle, 0);
-
 		fixture.setFriction(level.getJackFriction());
-				
 		fixture.setDensity(0.5f);
 		circle.dispose();		
 	}
@@ -92,7 +89,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		checkCollisions();
 		
 		if (isClimbing()) {
-			body.setLinearDamping(8f);
+			body.setLinearDamping(4f);
 		}
 		else {
 			body.setLinearDamping(level.getPlatformDamping());
@@ -125,8 +122,8 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		}			
 		float goRight = getRightThrust();
 		float goLeft = getLeftThrust();
-		float goUp = goUp();
-		float goDown = goDown();
+		goUp();
+		goDown();
 						
 		if (lastLadderStatus == GameObject.NO_LADDER && 
 				(ladderStatus == GameObject.LADDER || ladderStatus == GameObject.LADDER + GameObject.LADDER_BELOW)) {
@@ -144,7 +141,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 				default:
 					body.applyLinearImpulse(forceVector.set(4.4f*goRight, 0.0f), FORCE_APPLICATION_POINT, true);break;		
 				}
-			}		
+			}
 			else if (goLeft > 0) {
 				switch(ladderStatus) {				
 				case GameObject.LADDER:
@@ -191,7 +188,6 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		
 	}
 
-
 	private void checkCollisions() {
 		Vector2 position = body.getPosition();		
 		int tileX = (int) (position.x/Constant.METERS_PER_TILE);				
@@ -207,11 +203,17 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 				//onHit();
 			}
 			else if (CommonTile.EXIT.name().equals(cell.getTile().getProperties().get("id"))) {
-				level.onCompletion();
+				if(level.getWorldId() == 15)
+				{
+					level.screen.transitionTo(new FinalLevelScreen(score));
+				}
+				else
+				{
+					level.onCompletion();
+				}
 			}			
 		}
 	}
-
 
 	private void manageInvicibilityStatus(float tick) {
 		if (grantInvisibilityOnNextRender > 0) {			
@@ -225,35 +227,35 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		}
 	}
 
+	// Melompat
 	public float goUp() {
-		/*if(Gdx.input.isKeyJustPressed(Input.Keys.W)){*/
 		if(Gdx.input.isKeyJustPressed(Input.Keys.W) || LevelScreen.controller.isUpPressed()) {
 			System.out.printf("goUp. Pressed up button\n");	
 			jump();
-			
 			return 10f;
 		}
 		else {
-			float accelerometerX = Gdx.input.getAccelerometerX();
-			return accelerometerX < 0f ? 10f : 0f;
-			//return 0f;
+			//float accelerometerX = Gdx.input.getAccelerometerX();
+			//return accelerometerX < 0f ? 10f : 0f;
+			return 0f;
 		}
 	}
 
+	// Turun
 	public float goDown() {
-		/*if(Gdx.input.isKeyJustPressed(Input.Keys.S)){*/
 		if(Gdx.input.isKeyPressed(Input.Keys.S) || LevelScreen.controller.isDownPressed()) {
 			System.out.printf("goDown. Pressed up button\n");
 			wasDraggingDown = true;
 			return 10f;
 		}
 		else {
-			float accelerometerX = Gdx.input.getAccelerometerX();
-			return accelerometerX > 0f ? 10f : 0f;
-			//return 0f;
+			//float accelerometerX = Gdx.input.getAccelerometerX();
+			//return accelerometerX > 0f ? 10f : 0f;
+			return 0f;
 		}			
 	}
-	
+
+	// Berjalan ke kiri
 	public float getLeftThrust() {
 		/*if(Gdx.input.isKeyPressed(Input.Keys.A)) {*/
 		if(Gdx.input.isKeyPressed(Input.Keys.A) || LevelScreen.controller.isLeftPressed()){
@@ -266,6 +268,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		}
 	}
 
+	// Berjalan ke kanan
 	public float getRightThrust() {
 		/*if(Gdx.input.isKeyJustPressed(Input.Keys.D)){*/
 		if(Gdx.input.isKeyPressed(Input.Keys.D) || LevelScreen.controller.isRightPressed()) {
@@ -283,8 +286,6 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		return state == JackStateEnum.CLIMBING_DOWN || state == JackStateEnum.CLIMBING_IDLE || state == JackStateEnum.CLIMBING_UP;
 	}
 
-
-
 	public JackStateEnum getState() {
 		return state;
 	}
@@ -294,9 +295,8 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		return "UP:"+goUp() + " DOWN:"+goDown() + " LEFT:"+getLeftThrust() + " RIGHT:"+getRightThrust();
 	}
 
-
-	
 	final Vector2 jumpVector = new Vector2();
+
 	public void jump() {		
 		if (wasClimbing) {					
 				if (isTopOfTheLadder()) {
@@ -314,8 +314,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		}
 		wasDraggingDown = false;
 	}
-		
-	
+
 	@Override
 	public boolean keyDown(int keycode) {
 		return false;
@@ -357,7 +356,6 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 
 		return true;
 	}
-	
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -378,10 +376,9 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		return life;
 	}
 
-	public int getMojo() {
-		return mojo;
+	public int getHeart() {
+		return heart;
 	}
-
 
 	public int getScore() {
 		return score;
@@ -391,16 +388,14 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		score+=delta;
 	}
 
-
 	public void onHit() {
 		if (!invicible) {
-			//Art.hurtSound.play();
-			
-			if (mojo > 0) {				
-				mojo--;				
+			Art.hurtSound.play();
+			if (heart > 0) {
+				heart--;
 			}
 			
-			if (mojo > 0) {
+			if (heart > 0) {
 				grantInvisibilityOnNextRender = 2;
 				invicible = true;
 			}
@@ -410,7 +405,6 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		}
 	}
 
-
 	public void onDeath() {		
 		body.applyLinearImpulse(jumpVector.set((float) ((-1+Math.random()*2)*WALK_POWER), CLIMB_POWER*8), FORCE_APPLICATION_POINT, true);
 		dead = true;
@@ -418,10 +412,8 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		grantInvisibilityOnNextRender = 10;
 		life--;
 		if (life == 0) {
-
-			
-			score = 0;
-			level.screen.transitionTo(new GameOverScreen());
+			//score = 0;
+			level.screen.transitionTo(new GameOverScreen(score));
 		}
 		else {			
 			level.reset();
@@ -432,7 +424,6 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		incScore(collectable.getScoreValue());
 	}
 
-	
 	public static enum JackStateEnum {
 		IDLE(Art.walkingRightAnimation), 
 		WALK_LEFT(Art.walkingLeftAnimation),
@@ -451,11 +442,9 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		}
 	}
 
-
 	public boolean isInvicible() {
 		return invicible;
 	}
-
 
 	public boolean isDead() {
 		return dead;

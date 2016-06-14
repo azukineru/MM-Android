@@ -3,6 +3,8 @@ package com.minemeander;
 import static com.minemeander.Constant.BACKGROUND_LAYERS;
 import static com.minemeander.Constant.METERS_PER_TILE;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -45,7 +47,7 @@ public class Level {
 	public LevelObjectManager objectManager;
 	public PathingTool pathingTool;
 	public LevelCamera camera;
-	public Vector2 gravityVector = new Vector2(0f, -300f);
+	public Vector2 gravityVector = new Vector2(0f, -250f);
 	public LevelScreen screen;
 	public int worldId;
 	public int numRooms;
@@ -277,16 +279,21 @@ public class Level {
 	}
 
 	public void onCompletion() {
-
+		Art.playMusic.stop();
 		int nextWorld = worldId+1;
 		if(nextWorld != 16){
 			//screen.transitionTo(new LevelScreen(worldId+1));
 			screen.transitionTo(new CompletionScreen(worldId));
 		}
+		/*
 		else{
 			screen.transitionTo(new GameOverScreen());
 		}
+		*/
+	}
 
+	public int getWorldId(){
+		return worldId;
 	}
 
 	public float getPlatformDamping() {

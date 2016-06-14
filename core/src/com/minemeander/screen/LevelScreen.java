@@ -3,10 +3,17 @@ package com.minemeander.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.minemeander.Art;
 import com.minemeander.Constant;
 import com.minemeander.Controller;
 import com.minemeander.Level;
@@ -15,17 +22,20 @@ import com.minemeander.objects.Jack;
 public class LevelScreen extends AbstractScreen{
 	
 	private Level level;
+	private Stage stage = new Stage();
 	public static SpriteBatch spriteBatch = new SpriteBatch();
 	private long lastKeyTime = System.currentTimeMillis();
 	private float timer = 0f;	
 	private Box2DDebugRenderer box2dDebugRenderer;
-	private boolean pause;	
+	private boolean pause, resume;
 
 	public static Controller controller;
 
 	public LevelScreen(int worldId) {
 		level = new Level(this, worldId);		
 		controller = new Controller();
+		Art.playMusic.setLooping(true);
+		Art.playMusic.play();
 		fadeIn();
 	}
 		
@@ -45,6 +55,10 @@ public class LevelScreen extends AbstractScreen{
 		else if(controller.isDownPressed()){
 			//System.out.printf("Pressed Down Button\n");
 			//jack.getLeftThrust();
+		}
+		if(controller.isBackPressed()){
+			Art.playMusic.stop();
+			LevelScreen.this.transitionTo(new LevelSelectScreen());
 		}
 	}
 	
@@ -69,17 +83,20 @@ public class LevelScreen extends AbstractScreen{
 	@Override
 	public void render(float delta) {
 		update(Gdx.graphics.getDeltaTime());
-		if (Gdx.input.isKeyPressed(Input.Keys.F1) && (System.currentTimeMillis()-lastKeyTime)>100) {
-			level.debugMode = !level.debugMode;			
-			lastKeyTime=System.currentTimeMillis();
+		if ((Gdx.input.isKeyPressed(Input.Keys.F1) || Gdx.input.isKeyJustPressed(Input.Keys.BACK) ) &&  (System.currentTimeMillis()-lastKeyTime)>100) {
+			//level.debugMode = !level.debugMode;
+			//lastKeyTime=System.currentTimeMillis();
+			LevelScreen.this.transitionTo(new LevelSelectScreen());
 		}
-		
+
+
+
 		float deltaTime = pause ? 0 : Gdx.graphics.getDeltaTime();
 		timer += deltaTime;
 		level.step(deltaTime, 8, 3);
 		
 		level.camera.update(level.objectManager.getJack());
-		
+
 		// Render map
 		level.tiledMapRenderer.setView(level.camera.parrallax);
 		level.tiledMapRenderer.render(Constant.PARALLAX_LAYERS);
@@ -116,6 +133,7 @@ public class LevelScreen extends AbstractScreen{
 				level.objectManager.drawDebugInfo();
 				}				
 		}
+
 		// Select and Render the level
 		super.renderCurtain();
 	}
@@ -128,5 +146,7 @@ public class LevelScreen extends AbstractScreen{
 	public void pause() {
 		this.pause = true;
 	}
+
+	public void resume() { this.resume = true; }
 	
 }

@@ -33,6 +33,7 @@ public class CreditsScreen extends AbstractScreen{
         textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
         textButtonStyle.font = skin.getFont("default");
         skin.add("default", textButtonStyle);
+
         Table table = new Table();
         table.padTop(100);
         //table.padLeft(-900);
@@ -54,6 +55,7 @@ public class CreditsScreen extends AbstractScreen{
         button7.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                Art.buttonSound.play();
                 CreditsScreen.this.transitionTo(new MainMenu());
             }
         });

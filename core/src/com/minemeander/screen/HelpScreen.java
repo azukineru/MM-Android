@@ -26,7 +26,7 @@ public class HelpScreen extends AbstractScreen{
     public HelpScreen() {
         Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
         skin.add("white", new Texture(pixmap));
-        skin.add("default", Art.bitmapFont);
+        skin.add("default", Art.menuFont);
         TextButtonStyle textButtonStyle = new TextButtonStyle();
         textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
         textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
@@ -55,6 +55,7 @@ public class HelpScreen extends AbstractScreen{
         button6.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                Art.buttonSound.play();
                 HelpScreen.this.transitionTo(new HelpScreen2());
             }
         });
@@ -65,6 +66,7 @@ public class HelpScreen extends AbstractScreen{
         button7.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                Art.buttonSound.play();
                 HelpScreen.this.transitionTo(new MainMenu());
             }
         });

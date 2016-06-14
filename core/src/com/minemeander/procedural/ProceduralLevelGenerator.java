@@ -122,7 +122,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -137,7 +137,7 @@ public class ProceduralLevelGenerator {
 			}
 		}	
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -182,7 +182,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -197,7 +197,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -253,7 +253,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 				
@@ -268,7 +268,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -313,7 +313,6 @@ public class ProceduralLevelGenerator {
 				}			
 			}
 		}
-
 		roomNum++;
 	}
 
@@ -324,7 +323,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -339,7 +338,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -396,7 +395,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -411,7 +410,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -474,7 +473,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -489,7 +488,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -544,8 +543,6 @@ public class ProceduralLevelGenerator {
 				}			
 			}
 		}
-		
-
 		roomNum++;
 	}
 	
@@ -556,7 +553,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 2;
+		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -571,7 +568,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -637,7 +634,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -652,7 +649,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -716,7 +713,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -731,7 +728,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -797,7 +794,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -812,7 +809,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -876,7 +873,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -891,7 +888,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -958,7 +955,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -973,7 +970,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -1040,7 +1037,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -1055,7 +1052,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -1122,7 +1119,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -1137,7 +1134,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -1204,7 +1201,7 @@ public class ProceduralLevelGenerator {
 			return;
 		}		
 		
-		int obstacle = 3;
+		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
 		
@@ -1219,7 +1216,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		
-		for (int i = 0; i < obstacle; i++) {
+		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
 			{
@@ -1492,29 +1489,37 @@ public class ProceduralLevelGenerator {
 
 		generatedPlatforms[roomIndex] = new ArrayList<Platform>();
 
-		for (int y = roomHeight - 3; y > 0; y--) {
+		for (int y = roomHeight - 3; y > 0; y--)
+			{
 			if (Math.random() <= 0.7) {
-				for (int x = 1; x < roomWidth - 2; x++) {
-					double nextGaussian = rng.nextGaussian() + 1;
-					if (nextGaussian < 0) {
-						nextGaussian = 0;
-					}
-					if (nextGaussian > 2) {
-						nextGaussian = 2;
-					}
-
+				for (int x = 1; x < roomWidth - 2; x++)
+					{
 					if (Math.random() < 0.2) {
+						double nextGaussian = rng.nextGaussian() + 1;
+						if (nextGaussian < 0) {
+							nextGaussian = 0;
+						}
+						if (nextGaussian > 2) {
+							nextGaussian = 2;
+						}
+						// Mengatur panjang platform
 						int platformLength = (int) (nextGaussian * 4);
 						if (x + platformLength > roomWidth) {
 							platformLength = roomWidth - x;
 						}
+
 						int i = 0;
 						if (platformLength > 0) {
-							for (i = 0; i < platformLength; i++) {
-								if (!blockAt(roomOffsetX, roomOffsetY, x + i, y - 2) && !blockAt(roomOffsetX, roomOffsetY, x + i, y - 1)) {
+							for (i = 0; i < platformLength; i++)
+								{
+								// Jika tidak ada objek lain, letakkan platform pada titik x,y
+								if (!blockAt(roomOffsetX, roomOffsetY, x + i, y - 2) && !blockAt(roomOffsetX, roomOffsetY, x + i, y - 1))
+								{
 									setPlatformTile(roomOffsetX, roomOffsetY, x + i, y);
 								}
-								else {
+								else
+								// Jika ada objek lain, break loop
+								{
 									break;
 								}
 							}
@@ -1523,7 +1528,7 @@ public class ProceduralLevelGenerator {
 								generatedPlatforms[roomIndex].add(new Platform(roomOffsetX + x, roomOffsetY + y, i));
 							}
 						}
-
+						// Memberi ruang / sela-sela
 						int variableSpaceLength = 1 + (int) rng.nextDouble() * 8;
 						x += i + variableSpaceLength;
 					}
@@ -1689,7 +1694,7 @@ public class ProceduralLevelGenerator {
 	private void buildLevelPath(MMLevelLayout levelLayout) {		
 		GridPoint2 wpStartPosition = null;
 		GridPoint2 wpTargetPosition = null;
-		
+		//
 		for (Room room : levelLayout) {
 			if (wpStartPosition == null) {
 				wpStartPosition = levelLayout.randomPositionInRoom(room, rng);
@@ -1702,7 +1707,7 @@ public class ProceduralLevelGenerator {
 			}
 			wpTargetPosition = levelLayout.randomPositionInRoom(nextRoom, rng);
 			
-				buildLevelPathBetween(wpStartPosition, wpTargetPosition, room.orientation.current);
+			buildLevelPathBetween(wpStartPosition, wpTargetPosition, room.orientation.current);
 			wpStartPosition = wpTargetPosition;
 		}
 		this.endPosition = wpTargetPosition;
@@ -1717,7 +1722,7 @@ public class ProceduralLevelGenerator {
 		System.out.println("Done building level path.");
 	}	
 	
-private void buildLevelPathBetween(GridPoint2 startPosition, GridPoint2 targetPosition, Direction direction) {
+	private void buildLevelPathBetween(GridPoint2 startPosition, GridPoint2 targetPosition, Direction direction) {
 		
 		GridPoint2 cursor = new GridPoint2(startPosition);
 		int dx = targetPosition.x-cursor.x;
@@ -1735,16 +1740,16 @@ private void buildLevelPathBetween(GridPoint2 startPosition, GridPoint2 targetPo
 			dx = targetPosition.x-cursor.x;
 			dy = targetPosition.y-cursor.y;
 			
-			if (Math.abs(dx) > Math.abs(dy)) {
+			if (Math.abs(dx) > Math.abs(dy))
+				{
 				int sign = (int)Math.signum(dx);
-				
-				// Create a random platform									
-				
-				if (last != 1) {
+				if (last != 1)
+				{
 					clearLadderTile(cursor.x, cursor.y);
 				}
 				
-				for (int pi = 0; pi < Math.abs(dx) + 1; pi++) {						
+				for (int pi = 0; pi < Math.abs(dx) + 1; pi++)
+				{
 					int platformX = cursor.x+(pi*sign);
 					int platformY = cursor.y-1;
 					setPlatformTile(platformX, platformY, WorldTile.DIRT);	
@@ -1753,13 +1758,11 @@ private void buildLevelPathBetween(GridPoint2 startPosition, GridPoint2 targetPo
 					}
 				}										
 				cursor.x+=dx;
-				
 				last = 1;
 			}
-			else {
+			else
+			{
 				int sign = (int)Math.signum(dy);
-				
-				// Create a random ladder								
 				if (dy<=2 && dy > 0) {					
 					if (last != 1) {
 						clearLadderTile(cursor.x, cursor.y);
@@ -1776,7 +1779,6 @@ private void buildLevelPathBetween(GridPoint2 startPosition, GridPoint2 targetPo
 					}						
 				}
 				cursor.y+=dy;
-				
 				last = sign > 0 ? 2 : 3;
 			}
 		}

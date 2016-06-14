@@ -54,6 +54,8 @@ public class LevelSelectScreen2 extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 6;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -63,6 +65,8 @@ public class LevelSelectScreen2 extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 7;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -72,6 +76,8 @@ public class LevelSelectScreen2 extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 8;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -81,6 +87,8 @@ public class LevelSelectScreen2 extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 9;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -90,6 +98,8 @@ public class LevelSelectScreen2 extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
 				selectlevel = 10;
+				Art.startSound.play();
+				Art.menuMusic.stop();
 				fadeOut();
 			}
 		});
@@ -98,6 +108,7 @@ public class LevelSelectScreen2 extends AbstractScreen {
 		button6.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
+				Art.buttonSound.play();
 				LevelSelectScreen2.this.transitionTo(new LevelSelectScreen());
 			}
 		});
@@ -106,6 +117,7 @@ public class LevelSelectScreen2 extends AbstractScreen {
 		button8.addListener(new ChangeListener(){
 			@Override
 			public void changed(ChangeEvent event, Actor actor){
+				Art.buttonSound.play();
 				LevelSelectScreen2.this.transitionTo(new LevelSelectScreen3());
 			}
 		});
@@ -143,6 +155,7 @@ public class LevelSelectScreen2 extends AbstractScreen {
 		button10.addListener(new ChangeListener() {
 			@Override
 			public void changed (ChangeEvent event, Actor actor) {
+				Art.buttonSound.play();
 				LevelSelectScreen2.this.transitionTo(new MainMenu());
 			}
 		});

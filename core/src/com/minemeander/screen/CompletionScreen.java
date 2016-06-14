@@ -24,10 +24,13 @@ public class CompletionScreen extends AbstractScreen{
     private Stage stage = new Stage();
     private Skin skin = new Skin();
     private Texture titleImage;
+    private int worldId;
     public int currentLevel;
 
     public CompletionScreen(int worldId) {
-        this.currentLevel = worldId;
+        this.worldId = worldId;
+        currentLevel = worldId;
+        Art.winMusic.play();
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -46,14 +49,14 @@ public class CompletionScreen extends AbstractScreen{
         table.setFillParent(true);
         stage.addActor(table);
 
-        titleImage = new Texture(Gdx.files.internal("material/UI/Blank.png"));
-
-        TextButton button5 = new TextButton("LEVEL COMPLETE", skin);
+        titleImage = new Texture(Gdx.files.internal("material/UI/LevelComplete.png"));
 
         TextButton button6 = new TextButton("BACK TO LEVEL MENU", skin);
         button6.addListener(new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor){
+                Art.buttonSound.play();
+                Art.winMusic.stop();
                 CompletionScreen.this.transitionTo(new LevelSelectScreen());
             }
         });
@@ -63,12 +66,12 @@ public class CompletionScreen extends AbstractScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor){
                 //CompletionScreen.this.transitionTo(new LevelSelectScreen());
+                Art.winMusic.stop();
+                Art.startSound.play();
                 fadeOut();
             }
         });
 
-        table.row();
-        table.add(button5).pad(20).padTop(-50);
         table.row();
         table.add(button6).pad(60).padTop(50);
         table.row();

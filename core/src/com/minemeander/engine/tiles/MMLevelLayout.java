@@ -84,6 +84,7 @@ public class MMLevelLayout implements Iterable<Room>{
 	public static class Orientation {
 		public Direction previous;
 		public Direction current;
+
 		public Orientation(Direction previous, Direction current) {
 			super();
 			this.previous = previous;
@@ -200,7 +201,7 @@ public class MMLevelLayout implements Iterable<Room>{
 	public static StackIntX lastoCursorX = new StackIntX();
 	public static StackIntY lastoCursorY = new StackIntY();
 	
-	public static boolean searchingPath(int nbRooms, int cursorX, int cursorY, Direction lastDirection){
+	public static boolean searchingPath2(int nbRooms, int cursorX, int cursorY, Direction lastDirection){
 		
 		System.out.printf("\nTop Remaining rooms= %d\n", nbRooms);
 		if( nbRooms == 0 ){
@@ -263,7 +264,7 @@ public class MMLevelLayout implements Iterable<Room>{
 		return false;
 	}
 	
-	public static void searchingPath2(int nbRooms, int cursorX, int cursorY, Direction lastDirection){
+	public static void searchingPath(int nbRooms, int cursorX, int cursorY, Direction lastDirection){
 		
 		System.out.printf("\nTop Remaining rooms= %d\n", nbRooms);
 		if( nbRooms == 0 ){
@@ -272,6 +273,7 @@ public class MMLevelLayout implements Iterable<Room>{
 			System.out.print("End of searching\n");
 			return;
 		}
+
 		int size, index2;
 		double random;
 		Direction newDirection;
@@ -291,7 +293,7 @@ public class MMLevelLayout implements Iterable<Room>{
 			}
 		}
 					
-		possibleDirections.clear();		
+		possibleDirections.clear();
 		possibleDirections.addAll(directionList);
 		if(cursorX == 29 || directions[cursorX-1][cursorY] != null){
 			System.out.printf("PossibleDirection.WEST is not available.");
@@ -336,7 +338,6 @@ public class MMLevelLayout implements Iterable<Room>{
 		
 		size = possibleDirections.size();
 		if(size == 0){
-			
 			System.out.printf("Fail\n");
 			
 			//Save the fail direction into temp variable
@@ -376,11 +377,12 @@ public class MMLevelLayout implements Iterable<Room>{
 			System.out.printf("\n>>>>> FAIL >>");
 			System.out.print(topDirection);
 			System.out.printf(". cursorX: %d, cursorY: %d .\n", cursorX, cursorY);
-			
+
+			//No available space
 			if( size == 0 )
 			{
 				System.out.println("Null. Backtrack again.\n");
-				searchingPath2(nbRooms, cursorX, cursorY, null);
+				searchingPath(nbRooms, cursorX, cursorY, null);
 			}
 			else
 			{
@@ -395,7 +397,7 @@ public class MMLevelLayout implements Iterable<Room>{
 				System.out.print(directions[cursorX][cursorY]);
 				System.out.printf("\n\n");
 				
-				searchingPath2(nbRooms, cursorX, cursorY, lastDirection);
+				searchingPath(nbRooms, cursorX, cursorY, lastDirection);
 			}
 			
 			//failure = true;
@@ -435,10 +437,7 @@ public class MMLevelLayout implements Iterable<Room>{
 	public static MMLevelLayout random(int nbRooms) {
 		
 		//1. Random path search
-			
-		
 		int directionGridCenter = directions.length/2;
-		//ArrayList<Direction> possibleDirections = new ArrayList<MMLevelLayout.Direction>(10);
 
 		int totRooms;
 		totRooms = nbRooms;
@@ -468,9 +467,8 @@ public class MMLevelLayout implements Iterable<Room>{
 			System.out.printf("\n\n");
 			
 			nbRooms -= 1; counter++;
-			searchingPath2(nbRooms, cursorX, cursorY, lastDirection);
-			
-			
+			searchingPath(nbRooms, cursorX, cursorY, lastDirection);
+
 		}
 		while(failure);
 		
