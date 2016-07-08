@@ -205,6 +205,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 			else if (CommonTile.EXIT.name().equals(cell.getTile().getProperties().get("id"))) {
 				if(level.getWorldId() == 15)
 				{
+					Art.playMusic.stop();
 					level.screen.transitionTo(new FinalLevelScreen(score));
 				}
 				else
@@ -413,6 +414,7 @@ public class Jack extends GameObject implements Climber, InputProcessor{
 		life--;
 		if (life == 0) {
 			//score = 0;
+			Art.playMusic.stop();
 			level.screen.transitionTo(new GameOverScreen(score));
 		}
 		else {			

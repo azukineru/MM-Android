@@ -141,10 +141,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -166,8 +166,8 @@ public class ProceduralLevelGenerator {
 				}			
 				
 				if ( findStatus == true ) {
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
-					System.out.printf("\tPutting flower\n");
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tPutting flower\n");
 					spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 				}
 			}
@@ -201,10 +201,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -227,15 +227,15 @@ public class ProceduralLevelGenerator {
 				
 				if ( findStatus == true ) 
 				{
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( roomNum % 2 == 0)
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
@@ -272,10 +272,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -298,15 +298,15 @@ public class ProceduralLevelGenerator {
 				
 				if ( findStatus == true ) 
 				{
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( roomNum % 2 == 0)
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
@@ -342,10 +342,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -368,15 +368,15 @@ public class ProceduralLevelGenerator {
 				
 				if ( findStatus == true ) 
 				{
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 == 0 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( roomNum % 2 != 0)
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
@@ -414,10 +414,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -441,21 +441,21 @@ public class ProceduralLevelGenerator {
 				
 				if ( findStatus == true ) 
 				{
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 && roomNum != 6 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( roomNum % 2 == 0 && roomNum != 6 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					else if( roomNum == 6 )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 					}
 				}			
@@ -492,10 +492,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -518,21 +518,21 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 && roomNum != 7 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( roomNum % 2 == 0 && roomNum != 6 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					else if( roomNum == 6 || roomNum == 7 )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
@@ -572,10 +572,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -598,21 +598,21 @@ public class ProceduralLevelGenerator {
 				
 				if ( findStatus == true ) 
 				{
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i % 2 != 0 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i % 2 == 0 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( roomNum == 6 || roomNum == 7 )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
@@ -653,10 +653,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -678,21 +678,21 @@ public class ProceduralLevelGenerator {
 				
 				if ( findStatus == true ) 
 				{
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( i != 2 && (roomNum == 6 || roomNum == 8) )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
@@ -732,10 +732,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -757,21 +757,21 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( i != 2 && (roomNum == 1 || roomNum == 4 || roomNum == 7) )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
@@ -813,10 +813,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -838,21 +838,21 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( i != 2 && (roomNum == 1 || roomNum == 4 || roomNum == 7) )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
@@ -892,10 +892,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -917,23 +917,23 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						spiderNum++;
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( i == 2 )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
@@ -974,10 +974,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -999,23 +999,23 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						spiderNum++;
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( i == 2 )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
@@ -1056,10 +1056,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -1081,23 +1081,23 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						spiderNum++;
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
 					if( i == 2 )
 					{
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
@@ -1138,10 +1138,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -1163,16 +1163,16 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{			
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
@@ -1183,7 +1183,7 @@ public class ProceduralLevelGenerator {
 					}
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						spiderNum++;
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
@@ -1220,10 +1220,10 @@ public class ProceduralLevelGenerator {
 			findStatus = false;
 			while( findStatus == false )
 			{
-				System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
+				//System.out.printf("This is loop %d, Room index %d\n", loop, roomNum);
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
-				System.out.printf("\tPlatform length is = %d\n", platform.length);
+				//System.out.printf("\tPlatform length is = %d\n", platform.length);
 				
 				int randomPlacement = 0;
 								
@@ -1245,16 +1245,16 @@ public class ProceduralLevelGenerator {
 						
 				if ( findStatus == true ) 
 				{				
-					System.out.printf("\tRandom placement at = %d\n", randomPlacement);
+					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting flower\n");
+						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
 					}
 					else if( i == 2 )
 					{				
-						System.out.printf("\tPutting zombie\n");
+						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
 							spriteLayer.setCell(platform.x+randomPlacement+1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
@@ -1265,7 +1265,7 @@ public class ProceduralLevelGenerator {
 					}
 					if( i != 2 )
 					{
-						System.out.printf("\tPutting spider\n");
+						//System.out.printf("\tPutting spider\n");
 						spiderNum++;
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
@@ -1754,7 +1754,7 @@ public class ProceduralLevelGenerator {
 					int platformY = cursor.y-1;
 					setPlatformTile(platformX, platformY, WorldTile.DIRT);	
 					if (platformX == randomDx) {
-						//setOnLadderLayerIfEmpty(sign > 0 ? WorldTile.ROAD_SIGN_RIGHT : WorldTile.ROAD_SIGN_LEFT, platformX, platformY+1);
+						setOnLadderLayerIfEmpty(sign > 0 ? WorldTile.ROAD_SIGN_RIGHT : WorldTile.ROAD_SIGN_LEFT, platformX, platformY+1);
 					}
 				}										
 				cursor.x+=dx;

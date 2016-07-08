@@ -11,7 +11,7 @@ import com.minemeander.Level;
 
 public class LevelObjectManager {
 	
-	private GameObject[] list = new GameObject[5000];
+	private GameObject[] list = new GameObject[10000];
 	private int listSize = 0;
 	private int idGenerator = 0;
 	private Level level;
