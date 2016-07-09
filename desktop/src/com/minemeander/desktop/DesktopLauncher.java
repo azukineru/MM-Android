@@ -19,13 +19,17 @@ public class DesktopLauncher {
 		config.title = "Mine Meander";
 		config.width = 1000;
 		config.height = 600;
-		Constant.ZOOM_FACTOR = 0.3f;
+		Constant.ZOOM_FACTOR = 0.5f;
+
+		deleteFiles();
+		processSprites();
+		copyTiledMaps();
 
 		new LwjglApplication(new MyMineMeander(), config);
 	}
-	/*
+
 	public static void deleteFiles() {
-		File outputDir = new File("../android/assets/material/output");
+		File outputDir = new File("material/output");
 		File[] listFiles = outputDir.listFiles();
 		if (listFiles != null && listFiles.length > 0) {
 			for (File file : listFiles) {
@@ -38,12 +42,12 @@ public class DesktopLauncher {
 		TexturePacker.Settings settings = new TexturePacker.Settings();
 		settings.maxWidth = 512;
 		settings.maxHeight = 512;
-		TexturePacker.processIfModified(settings, "../android/assets/material/input/sprites3", "../android/assets/material/output", "pack");
+		TexturePacker.processIfModified(settings, "material/input/sprites3", "material/output", "pack");
 	}
 
 	public static void copyTiledMaps() throws IOException {
-		File inputDir = new File("../android/assets/material/input");
-		File outputDir = new File("../android/assets/material/output");
+		File inputDir = new File("material/input");
+		File outputDir = new File("material/output");
 
 		System.out.println("Copying tiled map to output...");
 		File[] listFiles = inputDir.listFiles(new FileFilter() {
@@ -57,5 +61,5 @@ public class DesktopLauncher {
 			Files.copy(Paths.get(file.getAbsolutePath()), Paths.get(outputDir.getAbsolutePath()+"/"+file.getName()), StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
-	*/
+
 }
