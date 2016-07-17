@@ -47,7 +47,7 @@ public class Spider extends GameObject{
 			}	
 		}
 		else {
-			Vector2 avatarTile = level.objectManager.getJack().getTile();
+			Vector2 avatarTile = level.objectManager.getAvatar().getTile();
 			body.setGravityScale(0f);
 						
 			if (getTile().dst(avatarTile) < SPIDER_PURSUIT_DISTANCE) {

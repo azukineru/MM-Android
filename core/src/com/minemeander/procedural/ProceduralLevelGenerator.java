@@ -22,30 +22,30 @@ import com.minemeander.Constant;
 import com.minemeander.Level;
 
 public class ProceduralLevelGenerator {
-	
+
 	private TiledMapTileLayer platformLayer;
 	private TiledMapTileLayer ladderLayer;
 	private TiledMapTileLayer spriteLayer;
 	private TiledMapTileLayer backgroundLayer;
-	
+
 	private TiledMapTileSet commonTileSet;
 	private TiledMapTileSet worldTileSet;
-	
+
 	private int roomHeight;
 	private int roomWidth;
 	private static int roomNum = 1;
-	private static int flowerNum = 0, spiderNum = 0, zombieNum = 0; 
+	private static int flowerNum = 0, spiderNum = 0, zombieNum = 0;
 	private Random rng;
-	
+
 	private int[][] groundAltitudes;
 
 	private List<Platform>[] generatedPlatforms;
 	private List<Ladder> ladderList;
 	private int worldId;
-	
+
 	GridPoint2 startPosition = null;
 	GridPoint2 endPosition = null;
-	
+
 	public ProceduralLevelGenerator(TiledMap tiledMap, int roomHeight, int roomWidth, int worldId){
 		super();
 		this.worldId = worldId;
@@ -58,17 +58,17 @@ public class ProceduralLevelGenerator {
 		this.worldTileSet = tiledMap.getTileSets().getTileSet(1);
 		this.roomHeight = roomHeight;
 		this.roomWidth = roomWidth;
-		
+
 		System.out.println(String.format("layer width: %d, height: %d", platformLayer.getWidth(), platformLayer.getHeight()));
 		int horizontalRooms = (platformLayer.getWidth()) / roomWidth;
 		int verticalRooms = (platformLayer.getHeight()) / roomHeight;
 		System.out.println(String.format("Number of horizontal rooms: %d, vertical: %d", horizontalRooms, verticalRooms));
-		
+
 		this.groundAltitudes = new int[horizontalRooms * verticalRooms][roomWidth];
 		this.generatedPlatforms = new ArrayList[horizontalRooms * verticalRooms];
 		this.ladderList = new ArrayList<Ladder>();
 	}
-	
+
 	private void fillRoom(Room room) {
 		for (int y = 0; y < roomHeight; y++) {
 			for (int x = 0; x < roomWidth; x++) {
@@ -76,25 +76,24 @@ public class ProceduralLevelGenerator {
 			}
 		}
 	}
-	
+
 	public void decorateRoom(Room room) {
 		if (room.ground) {
 			generateGround(room.id, room.offsetX, room.offsetY);
 		}
 
 		createRoomWalls(room);
-		
-		if (room.roomType != RoomType.FILLED) {			
+
+		if (room.roomType != RoomType.FILLED) {
 			createRandomPlatforms(room.id, room.offsetX, room.offsetY, room.ground);
 			createRandomLadders(room.id, room.offsetX, room.offsetY);
 		}
-		
+
 		createSprites(room.id);
 		createEnvironmentalHazard(room);
-		System.out.printf("Total flower= %d, spider= %d, zombie= %d\n", flowerNum, spiderNum, zombieNum);
-		
+		//System.out.printf("Total flower= %d, spider= %d, zombie= %d\n", flowerNum, spiderNum, zombieNum);
 	}
-	
+
 	private void createEnvironmentalHazard(Room room) {
 		for (int y = 0; y < roomHeight - 1; y++) {
 			for (int x = 1; x < roomWidth - 1; x++) {
@@ -106,37 +105,42 @@ public class ProceduralLevelGenerator {
 					}
 				}
 			}
-		}		
+		}
 	}
-	
+
 	public void setOnLadderLayerIfEmpty(WorldTile tile, int x, int y) {
 		if (ladderLayer.getCell(x, y) == null) {
 			ladderLayer.setCell(x, y, tile.toCell(worldTileSet));
 		}
 	}
-	
+
 	private void leveldesignWorld1(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			//System.out.printf("%d\n", roomNum);
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
-		}	
-		
+		}
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -145,58 +149,62 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
-				}			
-				
+				}
+
 				if ( findStatus == true ) {
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					//System.out.printf("\tPutting flower\n");
 					spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 				}
 			}
-		}	
+		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld2(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -205,27 +213,27 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
-				}			
-				
-				if ( findStatus == true ) 
+				}
+
+				if ( findStatus == true )
 				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 )
@@ -245,29 +253,33 @@ public class ProceduralLevelGenerator {
 
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld3(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-				
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -276,27 +288,27 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-				
-				if ( findStatus == true ) 
+
+				if ( findStatus == true )
 				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 )
@@ -310,7 +322,7 @@ public class ProceduralLevelGenerator {
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
-				}			
+				}
 			}
 		}
 		roomNum++;
@@ -318,26 +330,30 @@ public class ProceduralLevelGenerator {
 
 	private void leveldesignWorld4(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -346,27 +362,27 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
-				}		
-				
-				if ( findStatus == true ) 
+				}
+
+				if ( findStatus == true )
 				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 == 0 )
@@ -383,33 +399,37 @@ public class ProceduralLevelGenerator {
 				}
 			}
 		}
-		
+
 
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld5(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -418,28 +438,28 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-			
-				
-				if ( findStatus == true ) 
+
+
+				if ( findStatus == true )
 				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 && roomNum != 6 )
@@ -458,36 +478,40 @@ public class ProceduralLevelGenerator {
 						//System.out.printf("\tPutting zombie\n");
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 					}
-				}			
+				}
 			}
 		}
-		
+
 
 		roomNum++;
 	}
 
 	private void leveldesignWorld6(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -496,28 +520,28 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
-				}			
-						
-				if ( findStatus == true ) 
-				{				
+				}
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( roomNum % 2 != 0 && roomNum != 7 )
 					{
@@ -540,34 +564,38 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
 					}
-				}			
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld7(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 2;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -576,27 +604,27 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else
 				{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
-				}				
-				
-				if ( findStatus == true ) 
+				}
+
+				if ( findStatus == true )
 				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i % 2 != 0 )
@@ -620,7 +648,7 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
 					}
-				}			
+				}
 			}
 		}
 
@@ -629,26 +657,30 @@ public class ProceduralLevelGenerator {
 
 	private void leveldesignWorld8(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -657,26 +689,26 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
-				}				
-				
-				if ( findStatus == true ) 
+				}
+
+				if ( findStatus == true )
 				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
@@ -702,32 +734,36 @@ public class ProceduralLevelGenerator {
 					}
 				}
 			}
-		}	
+		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld9(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -736,32 +772,32 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
 					{
@@ -779,36 +815,40 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
 					}
-				}				
+				}
 			}
 		}
-		
+
 
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld10(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -817,32 +857,32 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
 					{
@@ -860,34 +900,38 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ZOMBIE.toCell(commonTileSet));
 						}
 					}
-				}				
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld11(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -896,33 +940,33 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
 					{
@@ -942,34 +986,38 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
 						}
 					}
-				}				
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld12(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -978,33 +1026,33 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
 					{
@@ -1024,34 +1072,38 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
 						}
 					}
-				}				
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld13(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -1060,33 +1112,33 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
 					{
@@ -1106,34 +1158,38 @@ public class ProceduralLevelGenerator {
 							spriteLayer.setCell(platform.x+randomPlacement-1, platform.y+1, CommonTile.ESKIMO.toCell(commonTileSet));
 						}
 					}
-				}				
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld14(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -1142,36 +1198,36 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
-					{			
+					{
 						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
@@ -1188,34 +1244,38 @@ public class ProceduralLevelGenerator {
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
-				}				
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld15(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
-		}		
-		
+		}
+
 		int indexObstacle = 3;
 		int loop = 1;
 		boolean findStatus;
-		
+
 		// Collectables
-		for(Platform platform : platformList) {
-			if (rng.nextDouble() > 0.5d) {
-				for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
-					if (!blockAt(platform.x+jewelIndex, platform.y+1) && rng.nextDouble() > 0.6) {
-						spriteLayer.setCell(platform.x+jewelIndex, platform.y+1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+		if(roomNum != 1) {
+			for (Platform platform : platformList) {
+				if (rng.nextDouble() > 0.5d) {
+					for (int jewelIndex = 0; jewelIndex < platform.length; jewelIndex++) {
+						if (!blockAt(platform.x + jewelIndex, platform.y + 1) && rng.nextDouble() > 0.6) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.BLUE_JEWEL.toCell(commonTileSet));
+						} else if (!blockAt(platform.x + jewelIndex, platform.y + 1) && (rng.nextDouble() > 0.4 && rng.nextDouble() <= 0.6)) {
+							spriteLayer.setCell(platform.x + jewelIndex, platform.y + 1, CommonTile.YELLOW_JEWEL.toCell(commonTileSet));
+						}
 					}
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < indexObstacle; i++) {
 			findStatus = false;
 			while( findStatus == false )
@@ -1224,36 +1284,36 @@ public class ProceduralLevelGenerator {
 				loop++;
 				Platform platform = platformList.get(rng.nextInt(platformList.size()));
 				//System.out.printf("\tPlatform length is = %d\n", platform.length);
-				
+
 				int randomPlacement = 0;
-								
+
 				if(platform.length <= 1)
 				{
 					findStatus = false;
 				}
 				else{
-					randomPlacement = rng.nextInt(platform.length);			
+					randomPlacement = rng.nextInt(platform.length);
 					if(!blockAt(platform.x+randomPlacement, platform.y+1))
-					{					
-						findStatus = true;	
+					{
+						findStatus = true;
 					}
 					else
 					{
 						findStatus = false;
 					}
 				}
-						
-				if ( findStatus == true ) 
-				{				
+
+				if ( findStatus == true )
+				{
 					//System.out.printf("\tRandom placement at = %d\n", randomPlacement);
 					if( i != 2 )
 					{
 						//System.out.printf("\tPutting flower\n");
 						flowerNum++;
-						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));					
+						spriteLayer.setCell(platform.x+randomPlacement, platform.y+1, CommonTile.FLOWER.toCell(commonTileSet));
 					}
 					else if( i == 2 )
-					{				
+					{
 						//System.out.printf("\tPutting zombie\n");
 						zombieNum++;
 						if(!blockAt(platform.x+randomPlacement+1, platform.y+1)){
@@ -1270,21 +1330,21 @@ public class ProceduralLevelGenerator {
 						ladderLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 						spriteLayer.setCell(platform.x+randomPlacement, platform.y, CommonTile.SPIDER.toCell(commonTileSet));
 					}
-				}				
+				}
 			}
 		}
 		roomNum++;
 	}
-	
+
 	private void leveldesignWorld16(int roomIndex)
 	{
-		List<Platform> platformList = generatedPlatforms[roomIndex];		
+		List<Platform> platformList = generatedPlatforms[roomIndex];
 		if (platformList == null) {
 			return;
 		}
 		//int zombies = rng.nextInt(5);
-		
-		
+
+
 		int zombies = 5;
 		int loop = 1;
 		for (int i = 0; i < zombies; i++) {
@@ -1293,10 +1353,10 @@ public class ProceduralLevelGenerator {
 			loop++;
 			Platform platform = platformList.get(rng.nextInt(platformList.size()));
 			System.out.printf("\tPlatform length is = %d\n", platform.length);
-			
+
 			int randomPlacement = 0;
 			boolean findStatus = false;
-			
+
 			for(int j=0; j<platform.length; j++)
 			{
 				if(!blockAt(platform.x+j, platform.y+1))
@@ -1305,10 +1365,10 @@ public class ProceduralLevelGenerator {
 					findStatus = true;
 				}
 			}
-			
+
 			//int randomPlacement = rng.nextInt(platform.length);
 			System.out.printf("\tRandom placement at = %d\n", randomPlacement);
-			
+
 			//if ( !blockAt(platform.x+randomPlacement, platform.y+1) ) {
 			if ( findStatus == true ) {
 				int random = rng.nextInt(3);
@@ -1332,7 +1392,7 @@ public class ProceduralLevelGenerator {
 				}
 			}
 		}
-		
+
 		// Collectables
 		for(Platform platform : platformList) {
 			if (rng.nextDouble() > 0.5d) {
@@ -1344,7 +1404,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 	}
-	
+
 	private void createSprites(int roomIndex) {
 		if(worldId == 1)
 		{
@@ -1411,7 +1471,7 @@ public class ProceduralLevelGenerator {
 			leveldesignWorld16(roomIndex);
 		}
 	}
-	
+
 	private void createRoomWalls(Room room) {
 
 		for (int y = roomHeight - 1; y >= 0; y--) {
@@ -1435,7 +1495,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 	}
-	
+
 	private void generateGround(int roomIndex, int roomOffsetX, int roomOffsetY) {
 		int groundAltitude = 0;
 		boolean hasHole = false;
@@ -1484,7 +1544,7 @@ public class ProceduralLevelGenerator {
 			groundAltitudes[roomIndex][randomIndex] = 0;
 		}
 	}
-	
+
 	private void createRandomPlatforms(int roomIndex, int roomOffsetX, int roomOffsetY, boolean ground) {
 
 		generatedPlatforms[roomIndex] = new ArrayList<Platform>();
@@ -1495,6 +1555,8 @@ public class ProceduralLevelGenerator {
 				for (int x = 1; x < roomWidth - 2; x++)
 					{
 					if (Math.random() < 0.2) {
+
+						// Randomly set platform length
 						double nextGaussian = rng.nextGaussian() + 1;
 						if (nextGaussian < 0) {
 							nextGaussian = 0;
@@ -1502,7 +1564,7 @@ public class ProceduralLevelGenerator {
 						if (nextGaussian > 2) {
 							nextGaussian = 2;
 						}
-						// Mengatur panjang platform
+
 						int platformLength = (int) (nextGaussian * 4);
 						if (x + platformLength > roomWidth) {
 							platformLength = roomWidth - x;
@@ -1511,14 +1573,14 @@ public class ProceduralLevelGenerator {
 						int i = 0;
 						if (platformLength > 0) {
 							for (i = 0; i < platformLength; i++)
-								{
-								// Jika tidak ada objek lain, letakkan platform pada titik x,y
+							{
+								// If there's no other object around, place the platform
 								if (!blockAt(roomOffsetX, roomOffsetY, x + i, y - 2) && !blockAt(roomOffsetX, roomOffsetY, x + i, y - 1))
 								{
 									setPlatformTile(roomOffsetX, roomOffsetY, x + i, y);
 								}
+								// If there's object around, break loop
 								else
-								// Jika ada objek lain, break loop
 								{
 									break;
 								}
@@ -1528,7 +1590,7 @@ public class ProceduralLevelGenerator {
 								generatedPlatforms[roomIndex].add(new Platform(roomOffsetX + x, roomOffsetY + y, i));
 							}
 						}
-						// Memberi ruang / sela-sela
+						// Give space
 						int variableSpaceLength = 1 + (int) rng.nextDouble() * 8;
 						x += i + variableSpaceLength;
 					}
@@ -1536,7 +1598,7 @@ public class ProceduralLevelGenerator {
 			}
 		}
 	}
-	
+
 	private void createRandomLadders(int roomIndex, int roomOffsetX, int roomOffsetY) {
 
 		List<Platform> platformList = generatedPlatforms[roomIndex];
@@ -1569,50 +1631,51 @@ public class ProceduralLevelGenerator {
 			System.out.print(groundAltitudes[roomIndex][x]);
 		}
 		System.out.println();
-	}	
-	
+	}
+
 	private boolean ladderAt(int roomOffsetX, int roomOffsetY, int relativeX, int relativeY) {
 		int x = roomOffsetX + relativeX;
 		int y = roomOffsetY + relativeY;
 		return ladderLayer.getCell(x, y) != null && ladderLayer.getCell(x, y).getTile().getProperties().containsKey("ladder");
 	}
-	
+
 	private boolean blockAt(int roomOffsetX, int roomOffsetY, int relativeX, int relativeY) {
 		int x = roomOffsetX + relativeX;
 		int y = roomOffsetY + relativeY;
 		return blockAt(x, y);
-	}	
-	
+	}
+
 	private boolean blockAt(int x, int y) {
 		return platformLayer.getCell(x, y) != null;
-	}	
-	
+	}
+
 	private void setLadderTile(int x, int y, boolean top) {
 		if (x >= 0 && x < platformLayer.getWidth() && y >= 0 && y < platformLayer.getHeight()) {
 			ladderLayer.setCell(x, y, top ? WorldTile.LADDER_TOP.toCell(worldTileSet) : WorldTile.LADDER.toCell(worldTileSet));
 		}
 	}
-	
+
 	private void clearLadderTile(int x, int y) {
 		if (x >= 0 && x < platformLayer.getWidth() && y >= 0 && y < platformLayer.getHeight()) {
 			ladderLayer.setCell(x, y, null);
 		}
 	}
-	
+
 	private void setPlatformTile(int roomOffsetX, int roomOffsetY, int relativeX, int relativeY) {
 		int x = roomOffsetX + relativeX;
 		int y = roomOffsetY + relativeY;
 		setPlatformTile(x, y, WorldTile.DIRT);
 	}
-	
+
 	private void setPlatformTile(int x, int y, WorldTile tile) {
 		if (x >= 0 && x < platformLayer.getWidth() && y >= 0 && y < platformLayer.getHeight()) {
 			platformLayer.setCell(x, y, tile.toCell(worldTileSet));
-		} else {
+		}
+		else {
 			throw new RuntimeException("setPlatform out of bounds" + x + "," + y + " => " + platformLayer.getWidth() + "," + platformLayer.getHeight());
 		}
 	}
-	
+
 	public void tilingPostProcessing(TiledMap map) {
 		// Create platform tiles in the layer
 		for (int y = platformLayer.getHeight() - 2; y > 0; y--) {
@@ -1648,7 +1711,7 @@ public class ProceduralLevelGenerator {
 		}
 
 		new TmxExporter(map).export(new File("material/output/generated1.tmx"));
-		
+
 		// Grow ladders
 		for (Ladder ladder : ladderList) {
 			int ladderX = ladder.x, ladderY = ladder.y - 1;
@@ -1664,82 +1727,84 @@ public class ProceduralLevelGenerator {
 			}
 		}
 		new TmxExporter(map).export(new File("material/output/generated2.tmx"));
-	}	
-	
-	public static TiledMap generateMap(TiledMap master, MMLevelLayout levelLayout, int worldId) {		
+	}
+
+	public static TiledMap generateMap(TiledMap master, MMLevelLayout levelLayout, int worldId) {
 		TiledMap map = cloneMapWithLayout(master, levelLayout, worldId);
 
 		ProceduralLevelGenerator proceduralArtGenerator = new ProceduralLevelGenerator(map, levelLayout.roomHeightInTiles, levelLayout.roomWidthInTiles, worldId);
-		
+
 		System.out.println("Fill background");
 		proceduralArtGenerator.fillBackground();
-		
+
 		System.out.println("Build path");
 		proceduralArtGenerator.buildLevelPath(levelLayout);
-		
-		
+
+
 		for (Room room : levelLayout) {
 			proceduralArtGenerator.decorateRoom(room);
 		}
-		
+
 		for (Room room : levelLayout.filledRoomsList) {
 			proceduralArtGenerator.fillRoom(room);
 		}
-				
+
 		proceduralArtGenerator.tilingPostProcessing(map);
-		
+
 		return map;
-	}	
-	
-	private void buildLevelPath(MMLevelLayout levelLayout) {		
+	}
+
+	private void buildLevelPath(MMLevelLayout levelLayout) {
 		GridPoint2 wpStartPosition = null;
 		GridPoint2 wpTargetPosition = null;
 		//
 		for (Room room : levelLayout) {
 			if (wpStartPosition == null) {
 				wpStartPosition = levelLayout.randomPositionInRoom(room, rng);
+				System.out.println("\nPoint= " + wpStartPosition);
 				this.startPosition = wpStartPosition;
-			}			 
-			
+			}
+
 			Room nextRoom = levelLayout.nextRoom(room);
 			if (nextRoom == null) {
 				continue;
 			}
 			wpTargetPosition = levelLayout.randomPositionInRoom(nextRoom, rng);
-			
+
 			buildLevelPathBetween(wpStartPosition, wpTargetPosition, room.orientation.current);
 			wpStartPosition = wpTargetPosition;
 		}
 		this.endPosition = wpTargetPosition;
 
 		System.out.println("Avatar tile position at " + startPosition.x + ", " + startPosition.y);
-		spriteLayer.setCell(startPosition.x, startPosition.y, CommonTile.JACK.toCell(commonTileSet));
-		
+		spriteLayer.setCell(startPosition.x, startPosition.y, CommonTile.AVATAR.toCell(commonTileSet));
+		System.out.println("Exit tile position at " + endPosition.x + ", " + endPosition.y);
 		ladderLayer.setCell(endPosition.x, endPosition.y, CommonTile.EXIT.toCell(commonTileSet));
 		platformLayer.setCell(endPosition.x, endPosition.y, null);
 		platformLayer.setCell(endPosition.x, endPosition.y - 1, WorldTile.DIRT.toCell(worldTileSet));
-		
+
 		System.out.println("Done building level path.");
-	}	
-	
+		roomNum = 1;
+	}
+
 	private void buildLevelPathBetween(GridPoint2 startPosition, GridPoint2 targetPosition, Direction direction) {
-		
+
 		GridPoint2 cursor = new GridPoint2(startPosition);
 		int dx = targetPosition.x-cursor.x;
 		int dy = targetPosition.y-cursor.y;
-		
+
 		int randomDx = -1; // Random x position to place a roadsign on this path section -1 if not applicable (vertical movement)
 		if (direction == Direction.EAST || direction == Direction.WEST) {
 			randomDx = cursor.x + (int)(rng.nextFloat()*dx);
 		}
-					
+
 		int last = -1; // 1 platform 2 ladder up 3 ladder down
-		
+
 		while(cursor.x != targetPosition.x || cursor.y != targetPosition.y) {
-			
+
 			dx = targetPosition.x-cursor.x;
 			dy = targetPosition.y-cursor.y;
-			
+
 			if (Math.abs(dx) > Math.abs(dy))
 				{
 				int sign = (int)Math.signum(dx);
@@ -1747,36 +1812,36 @@ public class ProceduralLevelGenerator {
 				{
 					clearLadderTile(cursor.x, cursor.y);
 				}
-				
+
 				for (int pi = 0; pi < Math.abs(dx) + 1; pi++)
 				{
 					int platformX = cursor.x+(pi*sign);
 					int platformY = cursor.y-1;
-					setPlatformTile(platformX, platformY, WorldTile.DIRT);	
+					setPlatformTile(platformX, platformY, WorldTile.DIRT);
 					if (platformX == randomDx) {
 						setOnLadderLayerIfEmpty(sign > 0 ? WorldTile.ROAD_SIGN_RIGHT : WorldTile.ROAD_SIGN_LEFT, platformX, platformY+1);
 					}
-				}										
+				}
 				cursor.x+=dx;
 				last = 1;
 			}
 			else
 			{
 				int sign = (int)Math.signum(dy);
-				if (dy<=2 && dy > 0) {					
+				if (dy<=2 && dy > 0) {
 					if (last != 1) {
 						clearLadderTile(cursor.x, cursor.y);
 					}
-					for (int pi = 0; pi <= Math.abs(dy)-1; pi++) {						
-						setPlatformTile(cursor.x, cursor.y+(pi*sign), WorldTile.DIRT);							
+					for (int pi = 0; pi <= Math.abs(dy)-1; pi++) {
+						setPlatformTile(cursor.x, cursor.y+(pi*sign), WorldTile.DIRT);
 					}
 				}
 				else {
 					int startLadderIndex = (last == 1 ? 1 : 0);
-					
-					for (int pi = startLadderIndex; pi <= Math.abs(dy); pi++) {					
+
+					for (int pi = startLadderIndex; pi <= Math.abs(dy); pi++) {
 						setLadderTile(cursor.x, cursor.y+(pi*sign), false);
-					}						
+					}
 				}
 				cursor.y+=dy;
 				last = sign > 0 ? 2 : 3;
@@ -1787,20 +1852,20 @@ public class ProceduralLevelGenerator {
 	private static TiledMap cloneMapWithLayout(TiledMap master, MMLevelLayout levelLayout, int worldId) {
 		return cloneMap(master, levelLayout.width, levelLayout.height, worldId);
 	}
-	
+
 	private static TiledMap cloneMap(TiledMap master, int width, int height, int worldId) {
 		TiledMap map = new TiledMap();
 		TiledMapTileLayer parrallaxLayer = new TiledMapTileLayer(width, height, 32, 32);
 		TiledMapTileLayer platformLayer = new TiledMapTileLayer(width, height, 32, 32);
 		TiledMapTileLayer ladderLayer = new TiledMapTileLayer(width, height, 32, 32);
-		TiledMapTileLayer spriteLayer = new TiledMapTileLayer(width, height, 32, 32);		
+		TiledMapTileLayer spriteLayer = new TiledMapTileLayer(width, height, 32, 32);
 		map.getLayers().add(parrallaxLayer);
 		map.getLayers().add(platformLayer);
 		map.getLayers().add(ladderLayer);
 		map.getLayers().add(spriteLayer);
-		TiledMapTileSet commonTileSet = master.getTileSets().getTileSet(0);		
-		TiledMapTileSet worldTileSet = master.getTileSets().getTileSet(worldId % Level.NUMBER_OF_WORLDS);		
-		
+		TiledMapTileSet commonTileSet = master.getTileSets().getTileSet(0);
+		TiledMapTileSet worldTileSet = master.getTileSets().getTileSet(worldId % Level.NUMBER_OF_WORLDS);
+
 		//System.out.println("* common tileset");
 		/*
 		for (TiledMapTile tiledMapTile : commonTileSet) {
@@ -1814,33 +1879,33 @@ public class ProceduralLevelGenerator {
 				System.out.println(String.format("%s(%d),", tileId, tiledMapTile.getId()));
 		}
 		*/
-		
+
 		map.getTileSets().addTileSet(commonTileSet);
 		map.getTileSets().addTileSet(worldTileSet);
 		map.getProperties().putAll(master.getProperties());
 		return map;
-	}	
-	
+	}
+
 	private void fillBackground() {
 		for (int x = 0; x < backgroundLayer.getWidth(); x++) {
 			for (int y = 0; y <= backgroundLayer.getHeight(); y++) {
-				backgroundLayer.setCell(x, y, randomTile());				
+				backgroundLayer.setCell(x, y, randomTile());
 			}
 		}
-		int maxSize = backgroundLayer.getHeight() > backgroundLayer.getWidth() ? backgroundLayer.getHeight() : backgroundLayer.getWidth();		
+		int maxSize = backgroundLayer.getHeight() > backgroundLayer.getWidth() ? backgroundLayer.getHeight() : backgroundLayer.getWidth();
 		Amortized2DNoise noise = new Amortized2DNoise(maxSize);
 		noise.generate2DNoise(backgroundLayer, worldTileSet, WorldTile.BACK_LIGHT1, WorldTile.BACK_LIGHT2, 5, 5, 0, 0);
-		
+
 		// Antialias tiles
 		for (int x = 1; x < backgroundLayer.getWidth() - 1; x++) {
 			for (int y = 1; y < backgroundLayer.getHeight() - 1; y++) {
 				Cell cell = backgroundLayer.getCell(x, y);
-				
+
 				Cell top = backgroundLayer.getCell(x, y+1);
 				Cell bottom = backgroundLayer.getCell(x, y-1);
 				Cell left = backgroundLayer.getCell(x-1, y);
 				Cell right = backgroundLayer.getCell(x+1, y);
-				
+
 				if (!isLight(cell)) {
 					if (isLight(top) && isLight(left) && !isLight(right) && !isLight(bottom)) {
 						cell.setTile(WorldTile.BACK_NORTH_WEST.fromTileSet(worldTileSet));
@@ -1858,14 +1923,14 @@ public class ProceduralLevelGenerator {
 			}
 		}
 	}
-	
+
 	private Cell randomTile() {
 		return rng.nextBoolean() ? WorldTile.BACK_DARK1.toCell(worldTileSet) : WorldTile.BACK_DARK2.toCell(worldTileSet);
 	}
-	
-	private boolean isLight(Cell cell) {		
+
+	private boolean isLight(Cell cell) {
 		String name = cell.getTile().getProperties().get("id").toString();
 		return name.equals(WorldTile.BACK_LIGHT1.name()) || name.equals(WorldTile.BACK_LIGHT2.name());
 	}
-	
+
 }

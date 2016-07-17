@@ -22,7 +22,7 @@ public class LevelObjectManager {
 	}
 	
 	public void add(GameObject gameObject) {
-		if (gameObject instanceof Jack) {
+		if (gameObject instanceof Avatar) {
 			this.jackId = gameObject.id;
 		}
 		listSize++;
@@ -33,8 +33,8 @@ public class LevelObjectManager {
 		return list[id];
 	}
 	
-	public Jack getJack(){
-		return (Jack) get(jackId);
+	public Avatar getAvatar(){
+		return (Avatar) get(jackId);
 	}
 	
 	public void draw(SpriteBatch spriteBatch, float tick) {	
@@ -86,6 +86,7 @@ public class LevelObjectManager {
 	}
 	
 	public void populateLevel() {
+		System.out.printf("Populate level\n");
 		TiledMapTileLayer spriteLayer = (TiledMapTileLayer)level.tiledMap.getLayers().get(Constant.SPRITE_LAYER);
 			
 		for (int y = spriteLayer.getHeight() - 1; y >= 0; y--) {							
@@ -96,10 +97,13 @@ public class LevelObjectManager {
 				float xPosition, yPosition;
 				
 				switch(CommonTile.fromCell(cell)) {
-				case JACK: {
+				case AVATAR: {
+					System.out.printf("Populate avatar\n");
 					xPosition = x*METERS_PER_TILE+1;
 					yPosition = y*METERS_PER_TILE+1;
-					add(new Jack(idGenerator++, level, xPosition, yPosition));
+					System.out.printf("Avatar (%d)\n", idGenerator);
+					add(new Avatar(idGenerator++, level, xPosition, yPosition));
+
 					break;
 				}
 				case SPIDER: {
@@ -129,7 +133,13 @@ public class LevelObjectManager {
 				case BLUE_JEWEL: {
 					xPosition = x*METERS_PER_TILE+1;
 					yPosition = y*METERS_PER_TILE+1;
-					add(new Jewel(idGenerator++, level, xPosition, yPosition, JewelType.BLUE));
+					add(new BlueJewel(idGenerator++, level, xPosition, yPosition, JewelType.BLUE));
+					break;
+				}
+				case YELLOW_JEWEL: {
+					xPosition = x*METERS_PER_TILE+1;
+					yPosition = y*METERS_PER_TILE+1;
+					add(new YellowJewel(idGenerator++, level, xPosition, yPosition, JewelType.YELLOW));
 					break;
 				}
 				case BIG_BLUE_JEWEL: {

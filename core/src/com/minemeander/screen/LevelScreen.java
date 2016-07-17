@@ -17,7 +17,7 @@ import com.minemeander.Art;
 import com.minemeander.Constant;
 import com.minemeander.Controller;
 import com.minemeander.Level;
-import com.minemeander.objects.Jack;
+import com.minemeander.objects.Avatar;
 
 public class LevelScreen extends AbstractScreen{
 	
@@ -42,19 +42,19 @@ public class LevelScreen extends AbstractScreen{
 	public void handleInput(){
 		if(controller.isRightPressed()){
 			//System.out.printf("Pressed Right Button\n");
-			//jack.getRightThrust();
+			//avatar.getRightThrust();
 		}
 		else if(controller.isLeftPressed()){
 			//System.out.printf("Pressed Left Button\n");
-			//jack.getLeftThrust();
+			//avatar.getLeftThrust();
 		}
 		if(controller.isUpPressed()){
 			//System.out.printf("Pressed Up Button\n");
-			//jack.getRightThrust();
+			//avatar.getRightThrust();
 		}
 		else if(controller.isDownPressed()){
 			//System.out.printf("Pressed Down Button\n");
-			//jack.getLeftThrust();
+			//avatar.getLeftThrust();
 		}
 		if(controller.isBackPressed()){
 			Art.playMusic.stop();
@@ -75,7 +75,7 @@ public class LevelScreen extends AbstractScreen{
 	@Override
 	protected void onFadeOutTermination() {
 		level.objectManager.reset();
-		level.camera.focusOnJack(level.objectManager.getJack());
+		level.camera.focusOnAvatar(level.objectManager.getAvatar());
 		controller = new Controller();
 		fadeIn();
 	}
@@ -95,7 +95,7 @@ public class LevelScreen extends AbstractScreen{
 		timer += deltaTime;
 		level.step(deltaTime, 8, 3);
 		
-		level.camera.update(level.objectManager.getJack());
+		level.camera.update(level.objectManager.getAvatar());
 
 		// Render map
 		level.tiledMapRenderer.setView(level.camera.parrallax);
@@ -139,8 +139,8 @@ public class LevelScreen extends AbstractScreen{
 	}
 	
 	private String getStatusString() {
-		Jack jack = level.objectManager.getJack();
-		return jack.toString();
+		Avatar avatar = level.objectManager.getAvatar();
+		return avatar.toString();
 	}
 
 	public void pause() {

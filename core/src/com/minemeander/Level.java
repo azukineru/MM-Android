@@ -47,7 +47,7 @@ public class Level {
 	public LevelObjectManager objectManager;
 	public PathingTool pathingTool;
 	public LevelCamera camera;
-	public Vector2 gravityVector = new Vector2(0f, -250f);
+	public Vector2 gravityVector = new Vector2(0f, -200f);
 	public LevelScreen screen;
 	public int worldId;
 	public int numRooms;
@@ -130,7 +130,7 @@ public class Level {
 
 		objectManager.populateLevel();
 
-		Vector2 position = objectManager.getJack().body.getPosition();
+		Vector2 position = objectManager.getAvatar().body.getPosition();
 		camera = new LevelCamera(this, position.x, position.y);
 
 	}
@@ -304,7 +304,7 @@ public class Level {
 		return 8f;
 	}
 	
-	public float getJackFriction() {
+	public float getAvatarFriction() {
 		/*
 		if (worldId == 2) {
 			return 0.02f;

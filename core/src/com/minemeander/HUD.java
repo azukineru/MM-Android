@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.minemeander.objects.Jack;
+import com.minemeander.objects.Avatar;
 
 public class HUD {
 	
@@ -17,8 +17,8 @@ public class HUD {
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		spriteBatch.begin();
 		
-		Jack jack = level.objectManager.getJack();
-		int life = jack.getHeart();
+		Avatar avatar = level.objectManager.getAvatar();
+		int life = avatar.getHeart();
 		
 		for(int i=0; i<life; i++){
 			TextureRegion keyFrame = Art.heartAnimation.getKeyFrame(timer, true);
@@ -28,10 +28,10 @@ public class HUD {
 		}
 		
 		Art.bitmapFont.draw(spriteBatch, String.format("SCORE: %08d", 
-			jack.getScore()),
+			avatar.getScore()),
 			20, Gdx.graphics.getHeight()-20);
 		Art.bitmapFont.draw(spriteBatch, String.format("AVATAR LIFE: %d", 
-				jack.getLife()),
+				avatar.getLife()),
 				20, Gdx.graphics.getHeight()-80);
 		spriteBatch.end();
 	}

@@ -28,7 +28,7 @@ public class Art {
     public static Music winMusic;
     public static Music loseMusic;
 
-    // Jack
+    // Avatar
     public static Animation walkingRightAnimation;
     public static Animation walkingLeftAnimation;
     public static Animation climbingAnimation;
@@ -49,6 +49,7 @@ public class Art {
 
     // Bonus
     public static Animation blueJewelAnimation;
+    public static Animation yellowJewelAnimation;
     public static Animation bigBlueJewelAnimation;
 
     // HUD
@@ -78,7 +79,7 @@ public class Art {
         heartAnimation = new Animation(0.2f, heartAnimationTextures);
         heartStaticTexture = heartAnimationTextures[0];
 
-        // Jack
+        // Avatar
         TextureRegion[] walkingTextures = atlas.findRegion("walk").split(TILESIZE, TILESIZE)[0];
         walkingRightAnimation = new Animation(0.1f, walkingTextures);
 
@@ -105,6 +106,8 @@ public class Art {
         // Goodies
         TextureRegion[] blueJewelTextures = atlas.findRegion("crystal-qubodup-ccby3-16-blue").split(16, 16)[0];
         blueJewelAnimation = new Animation(0.1f, blueJewelTextures);
+        TextureRegion[] yellowJewelTextures = atlas.findRegion("crystal-qubodup-ccby3-16-yellow").split(16, 16)[0];
+        yellowJewelAnimation = new Animation(0.1f, yellowJewelTextures);
         TextureRegion[] bigBlueJewelTextures = atlas.findRegion("crystal-qubodup-ccby3-32-blue").split(32, 32)[0];
         bigBlueJewelAnimation = new Animation(0.1f, bigBlueJewelTextures);
 

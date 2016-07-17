@@ -243,7 +243,7 @@ public class MMLevelLayout implements Iterable<Room>{
 		}
 		
 		System.out.print(lastDirection);
-		System.out.printf(". cursorX: %d, cursorY: %d when counter %d\n", cursorX, cursorY, counter);
+		System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
 		
 		size = possibleDirections.size();
 		if(size == 0){
@@ -264,176 +264,184 @@ public class MMLevelLayout implements Iterable<Room>{
 		return false;
 	}
 	
-	public static void searchingPath(int nbRooms, int cursorX, int cursorY, Direction lastDirection){
+	public static boolean searchingPath(int nbRooms, int cursorX, int cursorY, Direction lastDirection){
 		
 		System.out.printf("\nTop Remaining rooms= %d\n", nbRooms);
 		if( nbRooms == 0 ){
 			failure = false;			
 			tempcursorX = cursorX; tempcursorY = cursorY;
-			System.out.print("End of searching\n");
-			return;
+			System.out.print("End of searching\n\n");
+			return false;
 		}
 
-		int size, index2;
-		double random;
-		Direction newDirection;
-		String stringDirection;
-		
-		if(lastDirection != null)
-		{
-			switch(lastDirection){
-				case NORTH:
-					cursorY++;break;
-				case SOUTH:
-					cursorY--;break;
-				case EAST:
-					cursorX++;break;
-				case WEST:
-					cursorX--;break;	
+		if(nbRooms >= 1) {
+			int size, index2;
+			double random;
+			Direction newDirection;
+			String stringDirection;
+
+			if (lastDirection != null) {
+				switch (lastDirection) {
+					case NORTH:
+						cursorY++;
+						break;
+					case SOUTH:
+						cursorY--;
+						break;
+					case EAST:
+						cursorX++;
+						break;
+					case WEST:
+						cursorX--;
+						break;
+				}
 			}
-		}
-					
-		possibleDirections.clear();
-		possibleDirections.addAll(directionList);
-		if(cursorX == 29 || directions[cursorX-1][cursorY] != null){
-			System.out.printf("PossibleDirection.WEST is not available.");
-			possibleDirections.remove(Direction.WEST);
-		}
-		if(cursorY == 35 || directions[cursorX][cursorY+1] != null){
-			System.out.printf("PossibleDirection.NORTH is not available.");
-			possibleDirections.remove(Direction.NORTH);
-		}
-		if(cursorY == 29 || directions[cursorX][cursorY-1] != null){
-			System.out.printf("PossibleDirection.SOUTH is not available.");
-			possibleDirections.remove(Direction.SOUTH);
-		}
-		if(cursorX == 35 || directions[cursorX+1][cursorY] != null){
-			System.out.printf("PossibleDirection.EAST is not available.");
-			possibleDirections.remove(Direction.EAST);
-		}
-		
-		if(stateSearching == false && lastDirection == null)
-		{
-			if(tempDirectionWhenFail == Direction.EAST)	
-			{
-				System.out.printf("PossibleDirection.EAST 2 is not available.");
-				possibleDirections.remove(Direction.EAST);
-			}
-			if(tempDirectionWhenFail == Direction.WEST)	
-			{
-				System.out.printf("PossibleDirection.WEST 2 is not available.");
-				possibleDirections.remove(Direction.WEST);
-			}
-			if(tempDirectionWhenFail == Direction.NORTH)	
-			{
-				System.out.printf("PossibleDirection.NORTH 2 is not available.");
-				possibleDirections.remove(Direction.NORTH);
-			}
-			if(tempDirectionWhenFail == Direction.SOUTH)	
-			{
-				System.out.printf("PossibleDirection.SOUTH 2 is not available.");
-				possibleDirections.remove(Direction.SOUTH);
-			}
-		}
-		
-		size = possibleDirections.size();
-		if(size == 0){
-			System.out.printf("Fail\n");
-			
-			//Save the fail direction into temp variable
-			stringDirection = lastoDirections.arrayTop();
-			Direction failDirection = Direction.valueOf(stringDirection);
-			tempDirectionWhenFail = failDirection;
-			
-			//Empty fail direction[x][y]
-			cursorX = lastoCursorX.arrayTop(); cursorY = lastoCursorY.arrayTop();
-			System.out.printf("Directions at cursorX=%d cursorY=%d will be emptied\n", cursorX, cursorY);
-			directions[cursorX][cursorY] = null;
-			
-			//Assign with the previous value after popping		
-			lastoDirections.pop();
-			lastoCursorX.pop(); lastoCursorY.pop();
-			stringDirection = lastoDirections.arrayTop();
-			Direction topDirection = Direction.valueOf(stringDirection);
-			cursorX = lastoCursorX.arrayTop(); cursorY = lastoCursorY.arrayTop();	
-			
-			//Check around
-			possibleDirections.clear();		
+
+			possibleDirections.clear();
 			possibleDirections.addAll(directionList);
-			if(directions[cursorX-1][cursorY] != null || tempDirectionWhenFail == Direction.WEST)
+			if (cursorX == 30 || directions[cursorX - 1][cursorY] != null) {
+				System.out.printf("PossibleDirection.WEST is not available.");
 				possibleDirections.remove(Direction.WEST);
-			if(directions[cursorX+1][cursorY] != null || tempDirectionWhenFail == Direction.EAST)
-				possibleDirections.remove(Direction.EAST);
-			if(directions[cursorX][cursorY-1] != null || tempDirectionWhenFail == Direction.SOUTH)
-				possibleDirections.remove(Direction.SOUTH);
-			if(directions[cursorX][cursorY+1] != null || tempDirectionWhenFail == Direction.NORTH)
+			}
+			if (cursorY == 36 || directions[cursorX][cursorY + 1] != null) {
+				System.out.printf("PossibleDirection.NORTH is not available.");
 				possibleDirections.remove(Direction.NORTH);
-			
+			}
+			if (cursorY == 30 || directions[cursorX][cursorY - 1] != null) {
+				System.out.printf("PossibleDirection.SOUTH is not available.");
+				possibleDirections.remove(Direction.SOUTH);
+			}
+			if (cursorX == 36 || directions[cursorX + 1][cursorY] != null) {
+				System.out.printf("PossibleDirection.EAST is not available.");
+				possibleDirections.remove(Direction.EAST);
+			}
+
+			if (stateSearching == false && lastDirection == null) {
+				if (tempDirectionWhenFail == Direction.EAST) {
+					System.out.printf("PossibleDirection.EAST 2 is not available.");
+					possibleDirections.remove(Direction.EAST);
+				}
+				if (tempDirectionWhenFail == Direction.WEST) {
+					System.out.printf("PossibleDirection.WEST 2 is not available.");
+					possibleDirections.remove(Direction.WEST);
+				}
+				if (tempDirectionWhenFail == Direction.NORTH) {
+					System.out.printf("PossibleDirection.NORTH 2 is not available.");
+					possibleDirections.remove(Direction.NORTH);
+				}
+				if (tempDirectionWhenFail == Direction.SOUTH) {
+					System.out.printf("PossibleDirection.SOUTH 2 is not available.");
+					possibleDirections.remove(Direction.SOUTH);
+				}
+			}
+
 			size = possibleDirections.size();
-	
-			stateSearching = false;
-			nbRooms += 1;
-			
-			System.out.printf("\n>>>>> FAIL >>");
-			System.out.print(topDirection);
+			if (size == 0) {
+				System.out.printf("\nFail\n");
+
+				//Save the fail direction into temp variable
+				tempDirectionWhenFail = lastDirection;
+
+				//Empty fail direction[x][y]
+				cursorX = lastoCursorX.arrayTop();
+				cursorY = lastoCursorY.arrayTop();
+				System.out.printf("Directions at cursorX=%d cursorY=%d will be emptied\n", cursorX, cursorY);
+				directions[cursorX][cursorY] = null;
+
+				//Assign with the last value of stack
+				stringDirection = lastoDirections.arrayTop();
+				Direction topDirection = Direction.valueOf(stringDirection);
+
+				//Check around
+				possibleDirections.clear();
+				possibleDirections.addAll(directionList);
+				if (directions[cursorX - 1][cursorY] != null || tempDirectionWhenFail == Direction.WEST)
+					possibleDirections.remove(Direction.WEST);
+				if (directions[cursorX + 1][cursorY] != null || tempDirectionWhenFail == Direction.EAST)
+					possibleDirections.remove(Direction.EAST);
+				if (directions[cursorX][cursorY - 1] != null || tempDirectionWhenFail == Direction.SOUTH)
+					possibleDirections.remove(Direction.SOUTH);
+				if (directions[cursorX][cursorY + 1] != null || tempDirectionWhenFail == Direction.NORTH)
+					possibleDirections.remove(Direction.NORTH);
+
+				size = possibleDirections.size();
+
+				stateSearching = false;
+				nbRooms += 1;
+
+				System.out.printf("\n>>>>> FAIL >>");
+				System.out.print(topDirection);
+				System.out.printf(". cursorX: %d, cursorY: %d .\n", cursorX, cursorY);
+
+				//No available space
+				if (size == 0) {
+					System.out.println("Null. Backtrack.\n");
+					lastoDirections.pop();
+					lastoCursorX.pop();
+					lastoCursorY.pop();
+					cursorX = lastoCursorX.arrayTop();
+					cursorY = lastoCursorY.arrayTop();
+					searchingPath(nbRooms+1, cursorX, cursorY, null);
+					return false;
+				}
+				else {
+					//random
+					System.out.println("Not null. Searching another direction.\n");
+					random = Math.random();
+					index2 = (int) (random * size);
+					lastDirection = possibleDirections.get(index2);
+					directions[cursorX][cursorY] = new Orientation(topDirection, lastDirection);
+
+					System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+					System.out.print(directions[cursorX][cursorY]);
+					System.out.printf("\n\n");
+
+					searchingPath(nbRooms - 1, cursorX, cursorY, lastDirection);
+					return false;
+				}
+
+				//failure = true;
+				//return false;
+			}
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
 			System.out.printf(". cursorX: %d, cursorY: %d .\n", cursorX, cursorY);
 
-			//No available space
-			if( size == 0 )
-			{
-				System.out.println("Null. Backtrack again.\n");
-				searchingPath(nbRooms, cursorX, cursorY, null);
+			if (lastDirection != null) {
+				//Push and store the direction
+				lastoDirections.push(lastDirection.toString());
+				lastoCursorX.push(cursorX);
+				lastoCursorY.push(cursorY);
 			}
-			else
-			{
-				//random
-				System.out.println("Not null. Searching another direction.\n");
-				random = Math.random();
-				index2 = (int)(random*size);
-				lastDirection = possibleDirections.get(index2);
-				directions[cursorX][cursorY] = new Orientation(topDirection, lastDirection);
-				
-				System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
-				System.out.print(directions[cursorX][cursorY]);
-				System.out.printf("\n\n");
-				
-				searchingPath(nbRooms, cursorX, cursorY, lastDirection);
+
+			//Select next direction
+			random = Math.random();
+			index2 = (int) (random * size);
+			newDirection = possibleDirections.get(index2);
+			directions[cursorX][cursorY] = new Orientation(lastDirection, newDirection);
+			if(lastDirection == null){
+				stringDirection = lastoDirections.arrayTop();
+				lastDirection = Direction.valueOf(stringDirection);
+				directions[cursorX][cursorY] = new Orientation(lastDirection, newDirection);
 			}
-			
-			//failure = true;
-			//return false;
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			lastDirection = newDirection;
+
+			counter++;
+			stateSearching = true;
+			nbRooms = nbRooms - 1;
+			searchingPath(nbRooms, cursorX, cursorY, lastDirection);
 		}
 		
-		
-		System.out.printf("\n>>>>> %d >>", counter);
-		System.out.print(lastDirection);
-		System.out.printf(". cursorX: %d, cursorY: %d .\n", cursorX, cursorY);
-		
-		if( lastDirection != null){
-			//Push and store the direction			
-			lastoDirections.push(lastDirection.toString());
-			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
-		}
-		
-		//Select next direction
-		random = Math.random();
-		index2 = (int)(random*size);
-		newDirection = possibleDirections.get(index2);
-		directions[cursorX][cursorY] = new Orientation(lastDirection, newDirection);
-
-		
-		System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
-		System.out.print(directions[cursorX][cursorY]);
-		System.out.printf("\n\n");
-		
-		lastDirection = newDirection;
-
-		counter++; stateSearching = true;
-		searchingPath2(nbRooms-1, cursorX, cursorY, lastDirection);
-		
-		return;
+		return false;
 	}
-	
+
+
 	public static MMLevelLayout random(int nbRooms) {
 		
 		//1. Random path search
@@ -459,14 +467,33 @@ public class MMLevelLayout implements Iterable<Room>{
 			System.out.print(lastDirection);
 			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
 			
-			lastoDirections.push(lastDirection.toString());
-			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+			//lastoDirections.push(lastDirection.toString());
+			//lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
 			
 			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
 			System.out.print(directions[cursorX][cursorY]);
 			System.out.printf("\n\n");
-			
+
 			nbRooms -= 1; counter++;
+
+			//directions[33][32]
+			lastDirection = Direction.EAST;
+			cursorX = 33; cursorY = 32;
+			directions[33][32] = new Orientation(lastDirection, Direction.EAST);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
 			searchingPath(nbRooms, cursorX, cursorY, lastDirection);
 
 		}
@@ -500,7 +527,7 @@ public class MMLevelLayout implements Iterable<Room>{
 		//3. Generate Layout
 		int hRooms = bbTopX-bbBottomX + 1;
 		int vRooms = bbTopY-bbBottomY + 1;
-		MMLevelLayout mmLevelLayout = new MMLevelLayout(hRooms, vRooms, 20, 16,
+		MMLevelLayout mmLevelLayout = new MMLevelLayout(hRooms, vRooms, 20, 20,
 				directionGridCenter-bbBottomX,
 				directionGridCenter-bbBottomY,
 				cursorX-bbBottomX,
@@ -642,8 +669,8 @@ public class MMLevelLayout implements Iterable<Room>{
 	}
 	
 	public GridPoint2 randomPositionInRoom(Room room, Random rng) {
-		int x = rng.nextInt(roomWidthInTiles - 4);
-		int y = rng.nextInt(roomHeightInTiles - 4);
+		int x = rng.nextInt(roomWidthInTiles - 13);
+		int y = rng.nextInt(roomHeightInTiles - 13);
 		return new GridPoint2(room.offsetX + 2 + x, room.offsetY + 2 + y);
 	}
 	

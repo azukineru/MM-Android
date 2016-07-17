@@ -44,7 +44,7 @@ private TiledMap tiledMap;
 		
 		Element tileSetElement = doc.createElement("tileset");
 		tileSetElement.setAttribute("firstgid", "1");
-		tileSetElement.setAttribute("source", "common.tsx");
+		tileSetElement.setAttribute("source", "common2.tsx");
 		
 		Element tileSetElement2 = doc.createElement("tileset");
 		tileSetElement2.setAttribute("firstgid", "257");

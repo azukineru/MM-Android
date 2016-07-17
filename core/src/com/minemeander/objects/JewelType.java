@@ -1,7 +1,8 @@
 package com.minemeander.objects;
 
 public enum JewelType {
-	BLUE;
+	BLUE,
+	YELLOW;
 
 	public int getScoreValue() {
 		return 100;

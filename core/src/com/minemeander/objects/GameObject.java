@@ -102,8 +102,8 @@ public abstract class GameObject {
 					return;
 				}
 				Vector2 position = body.getPosition();
-				if (this instanceof Jack) {
-					float orientation = ((Jack)this).getOrientation();
+				if (this instanceof Avatar) {
+					float orientation = ((Avatar)this).getOrientation();
 					spriteBatch.draw(textureRegion, position.x-(width/2), position.y-(height/2), 1f, 1f, width, height, 1f, 1f, orientation);
 				}
 				else {

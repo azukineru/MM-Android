@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 Climb
   rotate: false
-  xy: 2, 20
+  xy: 390, 156
   size: 55, 32
   orig: 55, 32
   offset: 0, 0
@@ -14,6 +14,13 @@ Climb
 crystal-qubodup-ccby3-16-blue
   rotate: false
   xy: 132, 104
+  size: 128, 16
+  orig: 128, 16
+  offset: 0, 0
+  index: -1
+crystal-qubodup-ccby3-16-yellow
+  rotate: false
+  xy: 2, 36
   size: 128, 16
   orig: 128, 16
   offset: 0, 0
@@ -27,7 +34,7 @@ crystal-qubodup-ccby3-32-blue
   index: -1
 eskimo_climb
   rotate: false
-  xy: 390, 156
+  xy: 2, 2
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
@@ -62,7 +69,7 @@ menubox
   index: -1
 spider0
   rotate: false
-  xy: 2, 2
+  xy: 262, 138
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
@@ -83,14 +90,14 @@ walk
   index: -1
 web
   rotate: false
-  xy: 59, 20
+  xy: 447, 156
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 zombie_climb
   rotate: false
-  xy: 262, 122
+  xy: 68, 2
   size: 64, 32
   orig: 64, 32
   offset: 0, 0

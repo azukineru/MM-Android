@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.minemeander.objects.Jack;
+import com.minemeander.objects.Avatar;
 
 public class LevelCamera {
 	public OrthographicCamera front;
@@ -45,29 +45,29 @@ public class LevelCamera {
 		cameraBody = level.physicalWorld.createBody(bodyDef);		
 	}
 	
-	public void update(Jack jack) {
+	public void update(Avatar avatar) {
 		front.update();
 		parrallax.update();		
-		smoothTrackJack(jack);
+		smoothTrackAvatar(avatar);
 	}
 	
 	Vector3 jackScreenPosition = new Vector3();
 	
-	public void focusOnJack(Jack jack) {			
-		Vector2 jackWorldPosition = jack.body.getPosition();
+	public void focusOnAvatar(Avatar avatar) {
+		Vector2 jackWorldPosition = avatar.body.getPosition();
 		this.front.position.x = jackWorldPosition.x;
 		this.front.position.y = jackWorldPosition.y;
 		cameraBody.setTransform(jackWorldPosition.x, jackWorldPosition.y, 0);		
 		cameraBody.setLinearVelocity(0,0);
 	}
 	
-private void smoothTrackJack(Jack jack) {		
+private void smoothTrackAvatar(Avatar avatar) {
 		
-		if (jack.isDead()) {
+		if (avatar.isDead()) {
 			return;
 		}
 		
-		Vector2 jackWorldPosition = jack.body.getPosition();		
+		Vector2 jackWorldPosition = avatar.body.getPosition();
 		jackScreenPosition.x = jackWorldPosition.x;
 		jackScreenPosition.y = jackWorldPosition.y;
 		front.project(jackScreenPosition);

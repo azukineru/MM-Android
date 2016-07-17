@@ -1,0 +1,147 @@
+
+
+			//directions[33][32]
+			lastDirection = Direction.EAST;
+			cursorX = 33; cursorY = 32;
+			directions[33][32] = new Orientation(lastDirection, Direction.EAST);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[34][32]
+			lastDirection = Direction.EAST;
+			cursorX = 34; cursorY = 32;
+			directions[34][32] = new Orientation(lastDirection, Direction.NORTH);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[34][33]
+			lastDirection = Direction.NORTH;
+			cursorX = 34; cursorY = 33;
+			directions[34][33] = new Orientation(lastDirection, Direction.NORTH);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[34][34]
+			lastDirection = Direction.NORTH;
+			cursorX = 34; cursorY = 34;
+			directions[34][34] = new Orientation(lastDirection, Direction.WEST);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[33][34]
+			lastDirection = Direction.WEST;
+			cursorX = 33; cursorY = 34;
+			directions[33][34] = new Orientation(lastDirection, Direction.WEST);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[32][34]
+			lastDirection = Direction.WEST;
+			cursorX = 32; cursorY = 34;
+			directions[32][34] = new Orientation(lastDirection, Direction.WEST);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[31][34]
+			lastDirection = Direction.WEST;
+			cursorX = 31; cursorY = 34;
+			directions[31][34] = new Orientation(lastDirection, Direction.SOUTH);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			//directions[31][33]
+			lastDirection = Direction.SOUTH;
+			cursorX = 31; cursorY = 33;
+			directions[31][33] = new Orientation(lastDirection, Direction.EAST);
+
+			System.out.printf("\n>>>>> %d >>", counter);
+			System.out.print(lastDirection);
+			System.out.printf(". cursorX: %d, cursorY: %d\n", cursorX, cursorY);
+
+			lastoDirections.push(lastDirection.toString());
+			lastoCursorX.push(cursorX); lastoCursorY.push(cursorY);
+
+			System.out.printf("This is directions[%d][%d] ", cursorX, cursorY);
+			System.out.print(directions[cursorX][cursorY]);
+			System.out.printf("\n\n");
+
+			nbRooms -= 1; counter++;
+
+			lastDirection = Direction.EAST;

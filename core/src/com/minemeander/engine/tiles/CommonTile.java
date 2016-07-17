@@ -9,12 +9,13 @@ public enum CommonTile {
 	SPIDER,
 	ZOMBIE,
 	ESKIMO,
-	JACK,
+	AVATAR,
 	EXIT,
 	X_MARK,
 	BOULDER,
 	BIG_BLUE_JEWEL,
-	BLUE_JEWEL;
+	BLUE_JEWEL,
+	YELLOW_JEWEL;
 
 	public TiledMapTile fromTileSet(TiledMapTileSet set) {
 		for (TiledMapTile tiledMapTile : set) {

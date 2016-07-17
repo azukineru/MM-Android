@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.minemeander.Level;
 import com.minemeander.Art;
-import com.minemeander.objects.Jack;
+import com.minemeander.objects.Avatar;
 
 public class GameOverScreen extends AbstractScreen{
 	SpriteBatch spriteBatch = new SpriteBatch();
