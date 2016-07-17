@@ -15,7 +15,7 @@ public class LevelObjectManager {
 	private int listSize = 0;
 	private int idGenerator = 0;
 	private Level level;
-	private int jackId = -1;
+	private int avatarId = -1;
 	
 	public LevelObjectManager(Level level) {	
 		this.level = level;					
@@ -23,7 +23,7 @@ public class LevelObjectManager {
 	
 	public void add(GameObject gameObject) {
 		if (gameObject instanceof Avatar) {
-			this.jackId = gameObject.id;
+			this.avatarId = gameObject.id;
 		}
 		listSize++;
 		list[gameObject.id] = gameObject;
@@ -34,7 +34,7 @@ public class LevelObjectManager {
 	}
 	
 	public Avatar getAvatar(){
-		return (Avatar) get(jackId);
+		return (Avatar) get(avatarId);
 	}
 	
 	public void draw(SpriteBatch spriteBatch, float tick) {	
@@ -81,7 +81,7 @@ public class LevelObjectManager {
 				list[i] = null;
 			}
 		}
-		jackId = -1;
+		avatarId = -1;
 		populateLevel();
 	}
 	

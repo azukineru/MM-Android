@@ -61,11 +61,11 @@ public class Art {
     public static BitmapFont menuFont;
 
     // Menu
-    public static AtlasRegion jackBenoitLogo;
+    public static AtlasRegion avatarLogo;
 
     public static void load(TextureAtlas atlas) {
         // Menu
-        jackBenoitLogo = atlas.findRegion("logo");
+        avatarLogo = atlas.findRegion("logo");
 
         bitmapFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/kromasky20.fnt", FileType.Internal),
                 Gdx.files.getFileHandle("material/output/font/kromasky20.png", FileType.Internal), false);

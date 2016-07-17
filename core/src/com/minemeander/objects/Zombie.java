@@ -164,9 +164,9 @@ public class Zombie extends GameObject implements Climber {
 		// Pick an new target if none exists, or if last one is reached, or took too long to reach
 		targetTileSelectionTimestamp = tick;
 
-		Vector2 jackTile = level.objectManager.getAvatar().getTile();
-		if (currentTile.dst(jackTile) < ZOMBIE_PURSUIT_DISTANCE) {
-			Vector2 targetTile = findWayPointTile(wayPointList, jackTile);
+		Vector2 avatarTile = level.objectManager.getAvatar().getTile();
+		if (currentTile.dst(avatarTile) < ZOMBIE_PURSUIT_DISTANCE) {
+			Vector2 targetTile = findWayPointTile(wayPointList, avatarTile);
 			if (targetTile == null) {
 				findRandomWayPointTile(wayPointList, 20);
 			}

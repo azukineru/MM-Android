@@ -51,13 +51,13 @@ public class LevelCamera {
 		smoothTrackAvatar(avatar);
 	}
 	
-	Vector3 jackScreenPosition = new Vector3();
+	Vector3 avatarScreenPosition = new Vector3();
 	
 	public void focusOnAvatar(Avatar avatar) {
-		Vector2 jackWorldPosition = avatar.body.getPosition();
-		this.front.position.x = jackWorldPosition.x;
-		this.front.position.y = jackWorldPosition.y;
-		cameraBody.setTransform(jackWorldPosition.x, jackWorldPosition.y, 0);		
+		Vector2 avatarWorldPosition = avatar.body.getPosition();
+		this.front.position.x = avatarWorldPosition.x;
+		this.front.position.y = avatarWorldPosition.y;
+		cameraBody.setTransform(avatarWorldPosition.x, avatarWorldPosition.y, 0);
 		cameraBody.setLinearVelocity(0,0);
 	}
 	
@@ -67,17 +67,17 @@ private void smoothTrackAvatar(Avatar avatar) {
 			return;
 		}
 		
-		Vector2 jackWorldPosition = avatar.body.getPosition();
-		jackScreenPosition.x = jackWorldPosition.x;
-		jackScreenPosition.y = jackWorldPosition.y;
-		front.project(jackScreenPosition);
+		Vector2 avatarWorldPosition = avatar.body.getPosition();
+		avatarScreenPosition.x = avatarWorldPosition.x;
+		avatarScreenPosition.y = avatarWorldPosition.y;
+		front.project(avatarScreenPosition);
 		
 		Vector2 cameraBodyPosition = cameraBody.getPosition();		
 				
 		int halfViewPortWidth = viewPortWidthInMeters / 2;
 		int halfViewPortHeight = viewPortHeightInMeters / 2;
 		
-		Vector2 camVector = jackWorldPosition.sub(front.position.x, front.position.y).scl(2);
+		Vector2 camVector = avatarWorldPosition.sub(front.position.x, front.position.y).scl(2);
 				
 		if (cameraBodyPosition.x < halfViewPortWidth * zoom) {					
 			cameraBodyPosition.x = halfViewPortWidth * zoom;				
