@@ -75,8 +75,11 @@ public class Controller {
 		
 		Table table = new Table();
 		Table table2 = new Table();
-		table2.left().bottom();
+		Table table3 = new Table();
+
 		table.left().bottom();
+		table2.left().bottom();
+		table3.left().bottom();
 
 		Image backImg = new Image(new Texture(Gdx.files.internal("material/UI/back.png")));
 		backImg.setSize(80, 80);
@@ -93,8 +96,8 @@ public class Controller {
 			}
 		});
 
-		Image upImg = new Image(new Texture(Gdx.files.internal("material/UI/flatDark25.png")));
-		upImg.setSize(80, 80);
+		Image upImg = new Image(new Texture(Gdx.files.internal("material/UI/jump.png")));
+		upImg.setSize(100, 100);
 		upImg.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -108,8 +111,8 @@ public class Controller {
 			}			
 		});
 		
-		Image downImg = new Image(new Texture(Gdx.files.internal("material/UI/flatDark26.png")));
-		downImg.setSize(80, 80);
+		Image downImg = new Image(new Texture(Gdx.files.internal("material/UI/down.png")));
+		downImg.setSize(100, 100);
 		downImg.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -123,8 +126,8 @@ public class Controller {
 			}			
 		});
 		
-		Image rightImg = new Image(new Texture(Gdx.files.internal("material/UI/flatDark24.png")));
-		rightImg.setSize(80, 80);
+		Image rightImg = new Image(new Texture(Gdx.files.internal("material/UI/rightcontrol.png")));
+		rightImg.setSize(100, 100);
 		rightImg.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -138,8 +141,8 @@ public class Controller {
 			}			
 		});
 		
-		Image leftImg = new Image(new Texture(Gdx.files.internal("material/UI/flatDark23.png")));
-		leftImg.setSize(80, 80);
+		Image leftImg = new Image(new Texture(Gdx.files.internal("material/UI/leftcontrol.png")));
+		leftImg.setSize(100, 100);
 		leftImg.addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -156,22 +159,27 @@ public class Controller {
 		table2.add();
 		table2.add(backImg).size(backImg.getWidth(), backImg.getHeight()).padBottom(450).padLeft(960);
 
+		table3.add();
+		table3.add(upImg).size(upImg.getWidth(), upImg.getHeight()).padBottom(120).padLeft(930);
+		table3.add();
+		table3.add(downImg).size(downImg.getWidth(), downImg.getHeight()).padLeft(-300).padTop(70);
 
+		//table.add();
+		//table.add(upImg).size(upImg.getWidth(), upImg.getHeight());
 		table.add();
-		table.add(upImg).size(upImg.getWidth(), upImg.getHeight());
-		table.add();
-		//table.row().pad(5,100, 5, 100);
-		table.row().pad(5 ,5 ,5 ,5 );
+		table.padLeft(50);
+		//table.row().pad(5 ,5 ,5 ,5 );
 		table.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight());
-		table.add();
+		table.add().pad(0,70,70,0);
 		table.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight());
-		table.row().padBottom(5);
+		table.row().padBottom(40);
 		table.add();
-		table.add(downImg).size(downImg.getWidth(), downImg.getHeight());
+		//table.add(downImg).size(downImg.getWidth(), downImg.getHeight());
 		table.add();
 		
 		stage.addActor(table);
 		stage.addActor(table2);
+		stage.addActor(table3);
 	}
 
 	public void draw(){

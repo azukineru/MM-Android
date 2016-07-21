@@ -67,12 +67,12 @@ public class Art {
         // Menu
         avatarLogo = atlas.findRegion("logo");
 
-        bitmapFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/kromasky20.fnt", FileType.Internal),
-                Gdx.files.getFileHandle("material/output/font/kromasky20.png", FileType.Internal), false);
+        bitmapFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/hachiro.fnt", FileType.Internal),
+                Gdx.files.getFileHandle("material/output/font/hachiro_0.png", FileType.Internal), false);
         Art.bitmapFont.getData().setScale(1f);
 
-        menuFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/kromasky20.fnt", FileType.Internal),
-                Gdx.files.getFileHandle("material/output/font/kromasky20.png", FileType.Internal), false);
+        menuFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/hachiro.fnt", FileType.Internal),
+                Gdx.files.getFileHandle("material/output/font/hachiro_0.png", FileType.Internal), false);
         Art.menuFont.getData().setScale(2f);
 
         TextureRegion[] heartAnimationTextures = atlas.findRegion("heart").split(TILESIZE, TILESIZE)[0];

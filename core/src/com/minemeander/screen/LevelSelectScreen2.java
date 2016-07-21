@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.minemeander.Art;
 import com.minemeander.Constant;
 
@@ -43,7 +46,7 @@ public class LevelSelectScreen2 extends AbstractScreen {
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 		Table table = new Table();
-		table.padTop(100);
+		table.padTop(200);
 		table.setFillParent(true);
 		stage.addActor(table);
 	
@@ -104,21 +107,25 @@ public class LevelSelectScreen2 extends AbstractScreen {
 			}
 		});
 
-		TextButton button6 = new TextButton("PREVIOUS WORLD", skin);
-		button6.addListener(new ChangeListener(){
+		Image nextWorld = new Image(new Texture(Gdx.files.internal("material/UI/nextworld.png")));
+		nextWorld.setSize(240,240);
+		nextWorld.addListener(new ClickListener(){
 			@Override
-			public void changed(ChangeEvent event, Actor actor){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Art.buttonSound.play();
-				LevelSelectScreen2.this.transitionTo(new LevelSelectScreen());
+				LevelSelectScreen2.this.transitionTo(new LevelSelectScreen3());
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
 
-		TextButton button8 = new TextButton("NEXT WORLD", skin);
-		button8.addListener(new ChangeListener(){
+		Image prevWorld = new Image(new Texture(Gdx.files.internal("material/UI/prevworld.png")));
+		prevWorld.setSize(240,240);
+		prevWorld.addListener(new ClickListener(){
 			@Override
-			public void changed(ChangeEvent event, Actor actor){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 				Art.buttonSound.play();
-				LevelSelectScreen2.this.transitionTo(new LevelSelectScreen3());
+				LevelSelectScreen2.this.transitionTo(new LevelSelectScreen());
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
 
@@ -144,9 +151,9 @@ public class LevelSelectScreen2 extends AbstractScreen {
 		table.row();
 
 		table.row().pad(5 ,5 ,5 ,5 );
-		table.add(button6);
+		table.add(prevWorld);
 		table.add();
-		table.add(button8);
+		table.add(nextWorld);
 
 		table.row().padBottom(5);
 		table.add();

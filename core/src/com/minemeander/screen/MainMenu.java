@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -31,6 +32,7 @@ public class MainMenu extends AbstractScreen{
 	private Skin skin = new Skin();
 	private Texture titleImage;
 	private BitmapFont fontMenu;
+	private TextButton buttonPlay, buttonHelp, buttonCredit, buttonExit;
 	
 	public MainMenu(){
 		fontMenu  = Art.menuFont;
@@ -39,14 +41,16 @@ public class MainMenu extends AbstractScreen{
 		Art.menuMusic.play();
 
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
+
 		skin.add("white", new Texture(pixmap));
 		skin.add("default", fontMenu);
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+		//textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
+
 		Table table = new Table();
 		table.padTop(40);
 		table.setFillParent(true);
@@ -133,7 +137,6 @@ public class MainMenu extends AbstractScreen{
 		
 		table.layout();
 
-		
 		Gdx.input.setInputProcessor(stage);
 		
 		fadeIn();

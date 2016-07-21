@@ -40,12 +40,8 @@ public class HelpScreen3 extends AbstractScreen{
 
         titleImage = new Texture(Gdx.files.internal("material/UI/HC.png"));
 
-        TextButton button = new TextButton("INSTRUCTIONS", skin);
-        table.add(button).pad(20);
-        table.row();
-
         TextButton button2 = new TextButton("SCORE", skin);
-        table.add(button2).pad(20);
+        table.add(button2).pad(20).padTop(110);
         table.row();
 
         sectionImage = new Texture(Gdx.files.internal("material/UI/Crystal.jpg"));
@@ -58,7 +54,7 @@ public class HelpScreen3 extends AbstractScreen{
                 HelpScreen3.this.transitionTo(new HelpScreen4());
             }
         });
-        table.add(button6).pad(20).padTop(650);
+        table.add(button6).pad(20).padTop(630);
         table.row();
 
         TextButton button7 = new TextButton("BACK", skin);

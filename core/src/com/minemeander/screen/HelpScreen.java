@@ -33,6 +33,7 @@ public class HelpScreen extends AbstractScreen{
         textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
         textButtonStyle.font = skin.getFont("default");
         skin.add("default", textButtonStyle);
+
         Table table = new Table();
         table.padTop(100);
         //table.padLeft(-900);
@@ -41,12 +42,8 @@ public class HelpScreen extends AbstractScreen{
 
         titleImage = new Texture(Gdx.files.internal("material/UI/HC.png"));
 
-        TextButton button = new TextButton("INSTRUCTIONS", skin);
-        table.add(button).pad(20);
-        table.row();
-
         TextButton button2 = new TextButton("MOVEMENT CONTROL", skin);
-        table.add(button2).pad(20);
+        table.add(button2).pad(20).padTop(110);
         table.row();
 
         sectionImage = new Texture(Gdx.files.internal("material/UI/Movement.jpg"));
@@ -59,7 +56,7 @@ public class HelpScreen extends AbstractScreen{
                 HelpScreen.this.transitionTo(new HelpScreen2());
             }
         });
-        table.add(button6).pad(20).padTop(650);
+        table.add(button6).pad(20).padTop(630);
         table.row();
 
         TextButton button7 = new TextButton("BACK", skin);

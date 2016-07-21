@@ -16,7 +16,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		Constant.ZOOM_FACTOR = 0.3f;
+		Constant.ZOOM_FACTOR = 0.25f;
 		initialize(new MyMineMeander(), config);
 	}
 

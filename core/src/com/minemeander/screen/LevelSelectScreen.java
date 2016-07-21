@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.minemeander.Art;
 import com.minemeander.Constant;
 
@@ -46,8 +49,7 @@ public class LevelSelectScreen extends AbstractScreen {
 		skin.add("default", textButtonStyle);
 
 		Table table = new Table();
-		table.padTop(100);
-		//table.padLeft();
+		table.padTop(200);
 		table.setFillParent(true);
 		stage.addActor(table);
 
@@ -108,16 +110,19 @@ public class LevelSelectScreen extends AbstractScreen {
 			}
 		});
 
-		TextButton button6 = new TextButton("PREVIOUS WORLD", skin);
-
-		TextButton button8 = new TextButton("NEXT WORLD", skin);
-		button8.addListener(new ChangeListener(){
+		Image nextWorld = new Image(new Texture(Gdx.files.internal("material/UI/nextworld.png")));
+		nextWorld.setSize(240,240);
+		nextWorld.addListener(new ClickListener(){
 			@Override
-			public void changed(ChangeEvent event, Actor actor){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Art.buttonSound.play();
 				LevelSelectScreen.this.transitionTo(new LevelSelectScreen2());
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
+
+		Image prevWorld = new Image(new Texture(Gdx.files.internal("material/UI/disabled_prevworld.png")));
+		prevWorld.setSize(240,240);
 
 		table.add();
 		table.add(button).pad(20);
@@ -141,9 +146,9 @@ public class LevelSelectScreen extends AbstractScreen {
 		table.row();
 
 		table.row().pad(5 ,5 ,5 ,5 );
+		table.add(prevWorld);
 		table.add();
-		table.add();
-		table.add(button8);
+		table.add(nextWorld);
 
 		table.row().padBottom(5);
 		table.add();
