@@ -27,10 +27,10 @@ public class HUD {
 			spriteBatch.draw(keyFrame, x, y, 0, 0, 32, 32, 2f, 2f, 0f);
 		}
 		
-		Art.bitmapFont.draw(spriteBatch, String.format("SCORE: %08d", 
+		Art.menuFont.draw(spriteBatch, String.format("SCORE: %08d",
 			avatar.getScore()),
 			20, Gdx.graphics.getHeight()-20);
-		Art.bitmapFont.draw(spriteBatch, String.format("AVATAR LIFE: %d", 
+		Art.menuFont.draw(spriteBatch, String.format("Avatar Life: %d",
 				avatar.getLife()),
 				20, Gdx.graphics.getHeight()-80);
 		spriteBatch.end();

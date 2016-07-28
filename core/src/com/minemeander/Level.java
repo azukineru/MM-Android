@@ -51,8 +51,9 @@ public class Level {
 	public LevelScreen screen;
 	public int worldId;
 	public int numRooms;
-	
-	public Controller controller;
+
+	public static Preferences pref;
+	public static int levelState;
 
 	public Level(LevelScreen levelScreen, int worldId) {
 		super();
@@ -133,6 +134,9 @@ public class Level {
 		Vector2 position = objectManager.getAvatar().body.getPosition();
 		camera = new LevelCamera(this, position.x, position.y);
 
+		pref = Gdx.app.getPreferences("com.minemeander.profile");
+
+		//System.out.printf("levelstate = %d", levelState);
 	}
 	
 	public void reset() {
@@ -143,17 +147,6 @@ public class Level {
 		TiledMapTileLayer platforms = (TiledMapTileLayer) tiledMap.getLayers().get(BACKGROUND_LAYERS[0]);
 		TiledMapTileLayer ladders = (TiledMapTileLayer) tiledMap.getLayers().get(BACKGROUND_LAYERS[1]);
 
-		/*
-		 * tileX, tileY coords: 
-		 * +-----+-----+-----+-----+ 
-		 * | 0,2 | 1,2 | 2,2 | 3,2 | 
-		 * +-----+-----+-----+-----+ 
-		 * | 0,1 | 1,1 | 2,1 | 3,1 | 
-		 * +-----+-----+-----+-----+ 
-		 * | 0,0 | 1,0 | 2,0 | 3,0 | 
-		 * +-----+-----+-----+-----+
-		 */
-		
 		// Platforms
 
 		for (int tileY = 0; tileY < platforms.getHeight(); tileY++) {
@@ -281,15 +274,65 @@ public class Level {
 	public void onCompletion() {
 		Art.playMusic.stop();
 		int nextWorld = worldId+1;
+		if(nextWorld == 2){
+			pref.putInteger("level1", 1);
+			pref.flush();
+		}
+		else if(nextWorld == 3){
+			pref.putInteger("level2", 1);
+			pref.flush();
+		}
+		if(nextWorld == 4){
+			pref.putInteger("level3", 1);
+			pref.flush();
+		}
+		if(nextWorld == 5){
+			pref.putInteger("level4", 1);
+			pref.flush();
+		}
+		if(nextWorld == 6){
+			pref.putInteger("level5", 1);
+			pref.flush();
+		}
+		if(nextWorld == 7){
+			pref.putInteger("level6", 1);
+			pref.flush();
+		}
+		if(nextWorld == 8){
+			pref.putInteger("level7", 1);
+			pref.flush();
+		}
+		if(nextWorld == 9){
+			pref.putInteger("level8", 1);
+			pref.flush();
+		}
+		if(nextWorld == 10){
+			pref.putInteger("level9", 1);
+			pref.flush();
+		}
+		if(nextWorld == 11){
+			pref.putInteger("level10", 1);
+			pref.flush();
+		}
+		if(nextWorld == 12){
+			pref.putInteger("level11", 1);
+			pref.flush();
+		}
+		if(nextWorld == 13){
+			pref.putInteger("level12", 1);
+			pref.flush();
+		}
+		if(nextWorld == 14){
+			pref.putInteger("level13", 1);
+			pref.flush();
+		}
+		if(nextWorld == 15){
+			pref.putInteger("level14", 1);
+			pref.flush();
+		}
 		if(nextWorld != 16){
-			//screen.transitionTo(new LevelScreen(worldId+1));
 			screen.transitionTo(new CompletionScreen(worldId));
 		}
-		/*
-		else{
-			screen.transitionTo(new GameOverScreen());
-		}
-		*/
 	}
 
 	public int getWorldId(){

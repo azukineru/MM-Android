@@ -77,7 +77,7 @@ public class GameOverScreen extends AbstractScreen{
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		spriteBatch.begin();
 		spriteBatch.draw(titleImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		Art.menuFont.draw(spriteBatch, scoreTag, (Gdx.graphics.getWidth()/2)-300, Gdx.graphics.getHeight()/2 - 100);
+		Art.menuFont.draw(spriteBatch, scoreTag, (Gdx.graphics.getWidth()/2)-250, Gdx.graphics.getHeight()/2 - 100);
 		spriteBatch.end();
 
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

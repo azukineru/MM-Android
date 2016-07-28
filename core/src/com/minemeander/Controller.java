@@ -160,9 +160,10 @@ public class Controller {
 		table2.add(backImg).size(backImg.getWidth(), backImg.getHeight()).padBottom(450).padLeft(960);
 
 		table3.add();
-		table3.add(upImg).size(upImg.getWidth(), upImg.getHeight()).padBottom(120).padLeft(930);
+		table3.add(upImg).size(upImg.getWidth(), upImg.getHeight()).padBottom(20).padLeft(850);
+		table3.row();
 		table3.add();
-		table3.add(downImg).size(downImg.getWidth(), downImg.getHeight()).padLeft(-300).padTop(70);
+		table3.add(downImg).size(downImg.getWidth(), downImg.getHeight()).padBottom(20).padLeft(850);
 
 		//table.add();
 		//table.add(upImg).size(upImg.getWidth(), upImg.getHeight());

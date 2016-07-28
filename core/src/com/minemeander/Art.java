@@ -10,9 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
- * Created by tex on 5/31/2016.
- */
 public class Art {
     private static final int TILESIZE = 32;
 
@@ -67,12 +64,12 @@ public class Art {
         // Menu
         avatarLogo = atlas.findRegion("logo");
 
-        bitmapFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/hachiro.fnt", FileType.Internal),
-                Gdx.files.getFileHandle("material/output/font/hachiro_0.png", FileType.Internal), false);
+        bitmapFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/atarianb.fnt", FileType.Internal),
+                Gdx.files.getFileHandle("material/output/font/atarianb_0.png", FileType.Internal), false);
         Art.bitmapFont.getData().setScale(1f);
 
-        menuFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/hachiro.fnt", FileType.Internal),
-                Gdx.files.getFileHandle("material/output/font/hachiro_0.png", FileType.Internal), false);
+        menuFont = new BitmapFont(Gdx.files.getFileHandle("material/output/font/atarianb.fnt", FileType.Internal),
+                Gdx.files.getFileHandle("material/output/font/atarianb_0.png", FileType.Internal), false);
         Art.menuFont.getData().setScale(2f);
 
         TextureRegion[] heartAnimationTextures = atlas.findRegion("heart").split(TILESIZE, TILESIZE)[0];
@@ -111,11 +108,11 @@ public class Art {
         TextureRegion[] bigBlueJewelTextures = atlas.findRegion("crystal-qubodup-ccby3-32-blue").split(32, 32)[0];
         bigBlueJewelAnimation = new Animation(0.1f, bigBlueJewelTextures);
 
-        coinSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/coin2.wav", FileType.Internal));
+        coinSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/get_coin.wav", FileType.Internal));
         hurtSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/skill_hit.mp3", FileType.Internal));
         jumpSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/jump.wav", FileType.Internal));
         startSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/Accept.mp3", FileType.Internal));
-        buttonSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/powerup.wav", FileType.Internal));
+        buttonSound = Gdx.audio.newSound(Gdx.files.getFileHandle("material/output/sound/click_menu_converted.wav", FileType.Internal));
 
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("material/output/sound/bgm_menu.mp3"));
         playMusic = Gdx.audio.newMusic(Gdx.files.internal("material/output/sound/Pixel_adv.mp3"));

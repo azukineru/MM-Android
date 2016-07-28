@@ -6,11 +6,14 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.minemeander.Art;
 
 /**
@@ -32,41 +35,47 @@ public class HelpScreen5 extends AbstractScreen {
         textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
         textButtonStyle.font = skin.getFont("default");
         skin.add("default", textButtonStyle);
+
         Table table = new Table();
-        table.padTop(100);
-        //table.padLeft(-900);
+        table.padTop(100).padLeft(650);
         table.setFillParent(true);
         stage.addActor(table);
 
-        titleImage = new Texture(Gdx.files.internal("material/UI/HC.png"));
+        titleImage = new Texture(Gdx.files.internal("material/UI/BackgroundHelp.jpg"));
 
-        TextButton button2 = new TextButton("COMPLETION", skin);
-        table.add(button2).pad(20).padTop(110);
+        TextButton button2 = new TextButton("Level Completion", skin);
+        table.add(button2).padTop(120);
         table.row();
 
         sectionImage = new Texture(Gdx.files.internal("material/UI/Completion.jpg"));
 
-        TextButton button6 = new TextButton("NEXT", skin);
-        button6.addListener(new ChangeListener() {
+        Image nextbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/next_button.png")));
+        nextbutton.addListener(new ClickListener(){
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Art.buttonSound.play();
                 HelpScreen5.this.transitionTo(new HelpScreen());
+                return super.touchDown(event, x, y, pointer, button);
             }
         });
-        table.add(button6).pad(20).padTop(630);
-        table.row();
 
-        TextButton button7 = new TextButton("BACK", skin);
-        button7.addListener(new ChangeListener() {
+
+        //table.row();
+
+        Image backbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/back_button.png")));
+        backbutton.addListener(new ClickListener(){
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Art.buttonSound.play();
                 HelpScreen5.this.transitionTo(new MainMenu());
+                return super.touchDown(event, x, y, pointer, button);
             }
         });
-        table.add(button7).pad(20);
+
+        table.add(backbutton).pad(20).padTop(650);
+        table.add(nextbutton).pad(20).padLeft(200).padTop(-200);
         table.row();
+
 
 
 

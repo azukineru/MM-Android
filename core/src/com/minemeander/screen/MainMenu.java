@@ -13,7 +13,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.minemeander.Art;
 import com.minemeander.Constant;
 import com.minemeander.MyMineMeander;
@@ -30,7 +33,7 @@ public class MainMenu extends AbstractScreen{
 	private SpriteBatch spriteBatch = new SpriteBatch();
 	private Stage stage = new Stage();
 	private Skin skin = new Skin();
-	private Texture titleImage;
+	private Texture titleImage, settingImage;
 	private BitmapFont fontMenu;
 	private TextButton buttonPlay, buttonHelp, buttonCredit, buttonExit;
 	
@@ -52,90 +55,106 @@ public class MainMenu extends AbstractScreen{
 		skin.add("default", textButtonStyle);
 
 		Table table = new Table();
+		Table table2 = new Table();
+
 		table.padTop(40);
 		table.setFillParent(true);
+
+		table2.padTop(500);
+		table2.setFillParent(true);
+
 		stage.addActor(table);
+		stage.addActor(table2);
 	
-		titleImage = new Texture(Gdx.files.internal("material/UI/Menu.png"));
+		titleImage = new Texture(Gdx.files.internal("material/UI/BackgroundMenu.jpg"));
 		titleImage.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 		TextButton buttonx = new TextButton("",skin);
-		table.add(buttonx).pad(20).padLeft(1000);
+		table.add(buttonx).pad(20);
 		table.row();
-		table.add(buttonx).pad(20).padLeft(1000);
-		table.row();
-
-		table.add(buttonx).pad(20).padLeft(1000);
-		table.row();
-		table.add(buttonx).pad(20).padLeft(1000);
+		table.add(buttonx).pad(20);
 		table.row();
 
-		TextButton button = new TextButton("START", skin);
-		button.addListener(new ChangeListener(){
+		table.add(buttonx).pad(20);
+		table.row();
+		table.add(buttonx).pad(20);
+		table.row();
+
+		Image startbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/start_button.png")));
+		startbutton.addListener(new ClickListener(){
 			@Override
-			public void changed(ChangeEvent event, Actor actor){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Art.buttonSound.play();
-				Art.menuMusic.pause();
 				MainMenu.this.transitionTo(new LevelSelectScreen());
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		table.add(button).pad(20).padLeft(1000);
+
+		table.add(startbutton).pad(20);
 		table.row();
 
-		table.add(buttonx).pad(20).padLeft(1000);
-		table.row();
-		table.add(buttonx).pad(20).padLeft(1000);
+		table.add(buttonx).pad(20);
 		table.row();
 
-		TextButton button2 = new TextButton("HELP", skin);
-		button2.addListener(new ChangeListener(){
+		Image helpbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/help_button.png")));
+		helpbutton.addListener(new ClickListener(){
 			@Override
-			public void changed(ChangeEvent event, Actor actor){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Art.buttonSound.play();
 				MainMenu.this.transitionTo(new HelpScreen());
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		table.add(button2).pad(20).padLeft(1000);
+
+		table.add(helpbutton).pad(20);
 		table.row();
 
-		table.add(buttonx).pad(20).padLeft(1000);
-		table.row();
-		table.add(buttonx).pad(20).padLeft(1000);
+		table.add(buttonx).pad(20);
 		table.row();
 
-		TextButton button3 = new TextButton("CREDITS", skin);
-		button3.addListener(new ChangeListener() {			
+		Image creditsbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/credits_button.png")));
+		creditsbutton.addListener(new ClickListener(){
 			@Override
-			public void changed (ChangeEvent event, Actor actor) {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Art.buttonSound.play();
 				MainMenu.this.transitionTo(new CreditsScreen());
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		table.add(button3).pad(20).padLeft(1000);
+
+		table.add(creditsbutton).pad(20);
 		table.row();
 
-		table.add(buttonx).pad(20).padLeft(1000);
-		table.row();
-		table.add(buttonx).pad(20).padLeft(1000);
+		table.add(buttonx).pad(20);
 		table.row();
 
-		TextButton button4 = new TextButton("EXIT", skin);
-		button4.addListener(new ChangeListener() {
+		Image exitbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/exit_button.png")));
+		exitbutton.addListener(new ClickListener(){
 			@Override
-			public void changed (ChangeEvent event, Actor actor) {
-				//Art.buttonSound.play();
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Gdx.app.exit();
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		table.add(button4).pad(20).padLeft(1000);
+
+		table.add(exitbutton).pad(20);
 		table.row();
 
-		table.add(buttonx).pad(20).padLeft(1000);
+		table.add(buttonx).pad(20);
 		table.row();
-		table.add(buttonx).pad(20).padLeft(1000);
-		table.row();
-		
 		table.layout();
+
+		Image settingbutton = new Image(new Texture(Gdx.files.internal("material/UI/button/setting_button.png")));
+		settingbutton.addListener(new ClickListener(){
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				Art.buttonSound.play();
+				MainMenu.this.transitionTo(new SettingsScreen());
+				return super.touchDown(event, x, y, pointer, button);
+			}
+		});
+
+		table2.add(settingbutton).pad(20).padLeft(1700).padTop(350);
 
 		Gdx.input.setInputProcessor(stage);
 		
@@ -150,6 +169,7 @@ public class MainMenu extends AbstractScreen{
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		spriteBatch.begin();
 		spriteBatch.draw(titleImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		//spriteBatch.draw(settingImage, (Gdx.graphics.getWidth())-250, (Gdx.graphics.getHeight())-(Gdx.graphics.getHeight()-60), 170, 170);
 		spriteBatch.end();
 		
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
